@@ -46,35 +46,35 @@ Next, you'll need to create a vault that will be used to store the wallet conten
 
 Select Security -> Vault:
 
-![Console vault Link](docs/images/vault-menu.png)
+![Console vault Link](images/vault-menu.png)
 
 Click 'Create Vault'.
 
-![Create vault btn](docs/images/create-vault-btn.png)
+![Create vault btn](images/create-vault-btn.png)
 
 Name it, then click 'Create Vault'.
 
-![Create Vault dialog](docs/images/create-vault.png)
+![Create Vault dialog](images/create-vault.png)
 
 When your vault is active, click on it to view the vault details.
 
-![Vault list](docs/images/vault-list.png)
+![Vault list](images/vault-list.png)
 
 In the vault details, click 'Create Key'.
 
-![Create key btn](docs/images/create-key-btn.png)
+![Create key btn](images/create-key-btn.png)
 
 Name the key (1), choose the algorithm (2) and shape (3).
 
-![Create key btn](docs/images/create-key.png)
+![Create key btn](images/create-key.png)
 
 Still within the vault details, click 'Secrets' in the left sidebar, then click 'Create Secret'.
 
-![Create secret btn](docs/images/create-secret-btn.png)
+![Create secret btn](images/create-secret-btn.png)
 
 Create a separate secret for every Base64 encoded file in your wallet. Use the names [shown below](#wallet-files) for each secret.
 
-![Create secret](docs/images/create-secret.png)
+![Create secret](images/create-secret.png)
 
 #### Wallet Files
 
@@ -92,7 +92,7 @@ Create one more secret in this vault, this one containing your DB password that 
 
 Copy the OCID of your vault.
 
-![Create key btn](docs/images/copy-vault-ocid.png)
+![Create key btn](images/copy-vault-ocid.png)
 
 ### Config
        
