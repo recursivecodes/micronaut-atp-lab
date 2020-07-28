@@ -270,10 +270,13 @@ echo "-------------------------------------------"
 echo "Here is your ATP schema user password:"
 echo $DB_USER_PASSWORD
 echo "-------------------------------------------"
-echo "Here is your private key to connect to your compute instance. Save this to your local machine as `id_oci`"
+echo "Here is your private key to connect to your compute instance. Save this to your local machine as `~/.ssh/id_oci`"
 cat /tmp/id_oci
 
 echo "Script complete."
 echo "All resources have been created."
 echo "Scroll up to view outputs and copy this"
 echo "info as it will not be shown again."
+
+echo "After you have saved the private key to `~/.ssh/id_oci`, connect to your VM with:"
+echo "ssh opc@$PUBLIC_IP -i ~/.ssh/id_oci"
