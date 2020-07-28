@@ -2,11 +2,12 @@
 ## Before You Begin
 
 This 2-hour lab walks you through the steps to use Micronaut, Micronaut Data
-and GraalVM native image connected to an Oracle Database.
+and GraalVM native image to connected to an Oracle Database.
 1. Create an Oracle Cloud account
 1. Create an Autonomous Transaction Processing (ATP) Database
-1. Create an Oracle Compute instance and install/configure  
-   1. Graal
+1. Create an Oracle Compute instance and setup/configure
+1. Build an app with Micronaut, Micronaut Data and Graal
+1. Run your app in the cloud
 
 ### What Do You Need?
 
@@ -53,14 +54,14 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
    ![](images/createATPForm2.png)  
    You will receive an email when your new ATP Database instance has been provisioned.
 1. Locate your new database's OCID and click Copy.
-   ![](images/dbOcid.png)
+   ![](images/createATPGetOcid.png)
 1. While the database is provisioned click the Cloud Shell icon. This will open a preconfigured VM that you will use to access and setup your project.
    ![](images/cloudShell.png)  
 1. Once Cloud Shell is running, create an environment variable for your Database OCID you copied above.
    ```
    export DB_OCID=<pasteYourOCIDhere>
    ```
-   ![](images/envVarDbOcid.png)  
+   ![](images/cloudSheelOcidEnv.png)  
 
    The Oracle Autonomous Database uses an extra level of security in the form of a wallet containing access keys for your new Database.  
 
@@ -115,14 +116,14 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    ```
    export COMPUTE_IP=<YourPublicIP>
    ```
-   ![](images/saveComputeIP.png)
+   ![](images/computeSaveComputeIp.png)
 
 1. In your **Cloud Shell**  
    Use SCP to upload the wallet .zip file (downloaded earlier) to new Compute instance.
    ```
    scp Wallet_micronaut.zip opc@${COMPUTE_IP}:/home/opc/
    ```
-   ![](images/scpWallet.png)
+   ![](images/computeSaveWallet.png)
 
 1. In your local Terminal
    Create an environment variable to store the IP.
