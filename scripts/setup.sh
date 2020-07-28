@@ -27,9 +27,9 @@ echo "Generating SSH Key..."
 ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /tmp/id_oci
 
 echo "Generating DB password..."
-export DB_ADMIN_PASSWORD=$(openssl rand -base64 12)
-export DB_USER_PASSWORD=$(openssl rand -base64 12)
-export WALLET_PASSWORD=$(openssl rand -base64 12)
+export DB_ADMIN_PASSWORD=$(openssl rand -base64 12)1aA
+export DB_USER_PASSWORD=$(openssl rand -base64 12)1aA
+export WALLET_PASSWORD=$(openssl rand -base64 12)1aA
 
 echo "Creating Virtual Cloud Network..."
 export VCN=$(oci network vcn create \
