@@ -20,9 +20,11 @@ do
   sleep 5
 done
 
-# create SSH keypair for compute instance
+# clean up past runs
+rm -rf /tmp/wallet /tmp/wallet-encoded
 rm -f /tmp/id_oci /tmp/id_oci.pub
 
+# create SSH keypair for compute instance
 echo "Generating SSH Key..."
 ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /tmp/id_oci
 
@@ -182,17 +184,17 @@ echo "Creating secrets in vault..."
 
 # Create secret for /tmp/wallet-encoded/cwallet.sso (CWALLET_SSO)
 echo "Creating CWALLET_SSO secret..."
-oci vault secret create-base64 \
+export SECRET_CWALLET_SSO=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name CWALLET_SSO \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/cwallet.sso)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/cwallet.sso)")
 
 # Create secret for /tmp/wallet-encoded/ewallet.p12 (EWALLET_P12)
-echo "Creating EWALLET_P12 secret..."
+export SECRET_EWALLET_P12=$(echo "Creating EWALLET_P12 secret..."
 oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name EWALLET_P12 \
@@ -200,73 +202,73 @@ oci vault secret create-base64 \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/ewallet.p12)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/ewallet.p12)")
 
 # Create secret for /tmp/wallet-encoded/keystore.jks (KEYSTORE_JKS)
 echo "Creating KEYSTORE_JKS secret..."
-oci vault secret create-base64 \
+export SECRET_KEYSTORE_JKS=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name KEYSTORE_JKS \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/keystore.jks)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/keystore.jks)")
 
 # Create secret for /tmp/wallet-encoded/ojdbc.properties (OJDBC_PROPERTIES)
 echo "Creating OJDBC_PROPERTIES secret..."
-oci vault secret create-base64 \
+export SECRET_OJDBC_PROPERTIES=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name OJDBC_PROPERTIES \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/ojdbc.properties)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/ojdbc.properties)")
 
 # Create secret for /tmp/wallet-encoded/sqlnet.ora (SQLNET_ORA)
 echo "Creating SQLNET_ORA secret..."
-oci vault secret create-base64 \
+export SECRET_SQLNET_ORA=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name SQLNET_ORA \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/sqlnet.ora)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/sqlnet.ora)")
 
 # Create secret for /tmp/wallet-encoded/tnsnames.ora (TNSNAMES_ORA)
 echo "Creating TNSNAMES_ORA secret..."
-oci vault secret create-base64 \
+export SECRET_TNSNAMES_ORA=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name TNSNAMES_ORA \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/tnsnames.ora)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/tnsnames.ora)")
 
 # Create secret for /tmp/wallet-encoded/truststore.jks (TRUSTSTORE_JKS)
 echo "Creating TRUSTSTORE_JKS secret..."
-oci vault secret create-base64 \
+export SECRET_TRUSTSTORE_JKS=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name TRUSTSTORE_JKS \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(cat /tmp/wallet-encoded/truststore.jks)"
+  --secret-content-content "$(cat /tmp/wallet-encoded/truststore.jks)")
 
 # Create secret for DB Password (MICRONAUT_OCI_DEMO_PASSWORD)
 echo "Creating MICRONAUT_OCI_DEMO_PASSWORD secret..."
-oci vault secret create-base64 \
+export SECRET_MICRONAUT_OCI_DEMO_PASSWORD=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
   --secret-name MICRONAUT_OCI_DEMO_PASSWORD \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(echo $DB_USER_PASSWORD | base64)"
+  --secret-content-content "$(echo $DB_USER_PASSWORD | base64)")
 
 echo "Secrets created!"
 
@@ -297,4 +299,6 @@ echo "After you have saved the private key to '~/.ssh/id_oci', connect to your V
 echo "ssh opc@$PUBLIC_IP -i ~/.ssh/id_oci"
 
 # clean up files
-rm -rf /tmp/*
+rm -rf /tmp/wallet /tmp/wallet-encoded
+rm -f /tmp/id_oci /tmp/id_oci.pub
+
