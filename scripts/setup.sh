@@ -266,7 +266,7 @@ oci vault secret create-base64 \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
   --freeform-tags '{"project":"mn-oci-hol"}' \
-  --secret-content-content "$(echo $DB_ADMIN_PASSWORD | base64)"
+  --secret-content-content "$(echo $DB_USER_PASSWORD | base64)"
 
 echo "Secrets created!"
 
