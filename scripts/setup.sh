@@ -1,7 +1,9 @@
 export TENANCY_ID=$(curl http://169.254.169.254/opc/v1/instance/ | jq '.freeformTags["user-tenancy-ocid"]' --raw-output)
+echo "Creating compartment..."
 export COMPARTMENT=$(oci iam compartment create --compartment-id $TENANCY_ID --description "A compartment for mn-oci-demo resources" --name mn-oci-demo-compartment)
 export COMPARTMENT_ID=$(echo $COMPARTMENT | jq '.data.id' --raw-output)
 
+echo "Checking compartment state..."
 # manually wait for compartment to be active because compartment "wait-for-state" does not work properly
 compartmentState() {
   STATE=$(oci iam compartment get -c $COMPARTMENT_ID | jq '.data["lifecycle-state"]' --raw-output)
@@ -88,7 +90,7 @@ export INSTANCE=$(oci compute instance launch \
                   --wait-for-state RUNNING)
 
 echo "Instance created!"
-export INSTANCE_ID=$(echo $INSTANCE | jq ".id" --raw-output)
+export INSTANCE_ID=$(echo $INSTANCE | jq ".data.id" --raw-output)
 
 echo "Retrieving Instance IP Address..."
 export PUBLIC_IP=$(oci compute instance list-vnics --instance-id $INSTANCE_ID --query 'data[0].["public-ip"][0]' --raw-output)
@@ -97,9 +99,11 @@ echo "Instance IP Address retrieved..."
 # create ATP instance
 echo "Creating ATP instance..."
 export ATP=$(oci db autonomous-database create \
-              --admin-password $DB_ADMIN_PASSWORD\
+              --admin-password $DB_ADMIN_PASSWORD \
               --compartment-id $COMPARTMENT_ID \
               --is-free-tier true \
+              --cpu-core-count 1 \
+              --data-storage-size-in-tbs 1 \
               --db-name mnociatp \
               --display-name mnociatp \
               --wait-for-state AVAILABLE)
