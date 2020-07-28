@@ -1,6 +1,6 @@
 export TENANCY_ID=$(curl http://169.254.169.254/opc/v1/instance/ | jq '.freeformTags["user-tenancy-ocid"]' --raw-output)
 echo "Creating compartment..."
-export COMPARTMENT=$(oci iam compartment create --compartment-id $TENANCY_ID --description "A compartment for mn-oci-demo resources" --name mn-oci-demo-compartment)
+export COMPARTMENT=$(oci iam compartment create --compartment-id $TENANCY_ID --freeform-tags '{"project":"mn-oci-hol"}' --description "A compartment for mn-oci-demo resources" --name mn-oci-demo-compartment-$(date +%s))
 export COMPARTMENT_ID=$(echo $COMPARTMENT | jq '.data.id' --raw-output)
 
 echo "Checking compartment state..."
@@ -34,6 +34,7 @@ export WALLET_PASSWORD=$(openssl rand -base64 12)
 echo "Creating Virtual Cloud Network..."
 export VCN=$(oci network vcn create \
             --cidr-block 10.0.0.0/16 \
+            --freeform-tags '{"project":"mn-oci-hol"}' \
             --compartment-id $COMPARTMENT_ID \
             --wait-for-state AVAILABLE
         )
@@ -44,6 +45,7 @@ echo "Creating Subnet..."
 export SUBNET=$(oci network subnet create \
             --cidr-block 10.0.1.0/24 \
             --compartment-id $COMPARTMENT_ID \
+            --freeform-tags '{"project":"mn-oci-hol"}' \
             --vcn-id $VCN_ID \
             --wait-for-state AVAILABLE
         )
@@ -59,6 +61,7 @@ export NEW_INGRESS_RULES=$(echo $INGRESS_RULES | jq '. += [{"description":"Allow
 export SECURITY_LIST=$(oci network security-list update \
                       --security-list-id $SECURITY_LIST_ID \
                       --ingress-security-rules "$NEW_INGRESS_RULES" \
+                      --freeform-tags '{"project":"mn-oci-hol"}' \
                       --force \
                       --wait-for-state AVAILABLE)
 echo "Security list updated..."
@@ -87,6 +90,7 @@ export INSTANCE=$(oci compute instance launch \
                   --metadata '{"user_data": "IyEvYmluL3NoCnN1ZG8gZmlyZXdhbGwtY21kIC0tcGVybWFuZW50IC0tem9uZT1wdWJsaWMgLS1hZGQtcG9ydD04MDgwL3RjcApzdWRvIGZpcmV3YWxsLWNtZCAtLXJlbG9hZApzdWRvIHNoIC1jICdlY2hvICJXZWxjb21lIE1pY3JvbmF1dCBIT0wgQXR0ZW5kZWUhIiA+IC9ldGMvbW90ZCcK"}' \
                   --ssh-authorized-keys-file /tmp/id_oci.pub \
                   --subnet-id $SUBNET_ID \
+                  --freeform-tags '{"project":"mn-oci-hol"}' \
                   --wait-for-state RUNNING)
 
 echo "Instance created!"
@@ -106,6 +110,7 @@ export ATP=$(oci db autonomous-database create \
               --data-storage-size-in-tbs 1 \
               --db-name mnociatp \
               --display-name mnociatp \
+              --freeform-tags '{"project":"mn-oci-hol"}' \
               --wait-for-state AVAILABLE)
 
 echo "ATP instance created!"
@@ -122,6 +127,11 @@ echo "Wallet downloaded!"
 
 # unzip wallet
 unzip /tmp/wallet.zip -d /tmp/wallet
+
+echo "Creating schema..."
+# fix the sqlnet.ora file
+sed -i 's/?\/network\/admin/\/tmp\/wallet/g' /tmp/wallet/sqlnet.ora
+export TNS_ADMIN=/tmp/wallet
 
 # create schema user
 echo "Creating schema `mnocidemo` on ATP instance..."
@@ -149,6 +159,7 @@ export VAULT=$(oci kms management vault create \
                 --compartment-id $COMPARTMENT_ID \
                 --display-name mn-oci-vault \
                 --vault-type DEFAULT \
+                --freeform-tags '{"project":"mn-oci-hol"}' \
                 --wait-for-state ACTIVE)
 echo "Vault created!"
 export VAULT_ID=$(echo $VAULT | jq '.data.id' --raw-output)
@@ -159,6 +170,7 @@ echo "Creating key..."
 export KEY=$(oci kms management key create \
                 --compartment-id $COMPARTMENT_ID \
                 --display-name mn-oci-key \
+                --freeform-tags '{"project":"mn-oci-hol"}' \
                 --key-shape '{"algorithm": "AES", "length": 32}' \
                 --endpoint $MANAGEMENT_ENDPOINT \
                 --wait-for-state ENABLED)
@@ -176,6 +188,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/cwallet.sso)"
 
 # Create secret for /tmp/wallet-encoded/ewallet.p12 (EWALLET_P12)
@@ -186,6 +199,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/ewallet.p12)"
 
 # Create secret for /tmp/wallet-encoded/keystore.jks (KEYSTORE_JKS)
@@ -196,6 +210,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/keystore.jks)"
 
 # Create secret for /tmp/wallet-encoded/ojdbc.properties (OJDBC_PROPERTIES)
@@ -206,6 +221,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/ojdbc.properties)"
 
 # Create secret for /tmp/wallet-encoded/sqlnet.ora (SQLNET_ORA)
@@ -216,6 +232,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/sqlnet.ora)"
 
 # Create secret for /tmp/wallet-encoded/tnsnames.ora (TNSNAMES_ORA)
@@ -226,6 +243,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/tnsnames.ora)"
 
 # Create secret for /tmp/wallet-encoded/truststore.jks (TRUSTSTORE_JKS)
@@ -236,6 +254,7 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(cat /tmp/wallet-encoded/truststore.jks)"
 
 # Create secret for DB Password (MICRONAUT_OCI_DEMO_PASSWORD)
@@ -246,14 +265,10 @@ oci vault secret create-base64 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
+  --freeform-tags '{"project":"mn-oci-hol"}' \
   --secret-content-content "$(echo $DB_ADMIN_PASSWORD | base64)"
 
 echo "Secrets created!"
-
-echo "Creating schema..."
-# fix the sqlnet.ora file
-sed -i 's/?\/network\/admin/\/tmp\/wallet/g' /tmp/wallet/sqlnet.ora
-export TNS_ADMIN=/tmp/wallet
 
 echo "Here is your TNS Name:"
 echo $TNS_NAME
