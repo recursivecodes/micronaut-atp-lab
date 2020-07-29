@@ -1,25 +1,76 @@
 # Setup
 
-Run the setup script from Cloud Shell. This script will perform the following:
+## Create an SSH Keypair
 
-* Create a compartment
-* Create an SSH keypair
-* Create passwords for a DB admin & DB user
-* Create a virtual cloud network (VCN)
-* Create a subnet in the VCN
-* Update the default VCN security list to allow ingress on port 8080
-* Create a VM (and allow port 8080 through the firewall)
-* Create an ATP instance
-* Create a schema called 'mnocidemo' on the ATP instance
-* Download the ATP instance wallet
-* Create a vault
-* Create a key in the vault
-* Create secrets with the Base64 encoded contents of each file in the wallet
-* Create a secret containing the DB user password
+For example:
 
-**Note:** This script will take 5-10 minutes to run!
+```shell script
+ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /path/to/id_oci
+```
 
-To run, open cloud shell and execute the following commands:
+## Create Infrastructure
+
+Download the Terraform configuration Zip from https://github.com/todo...
+
+Go to the Resource Manager:
+
+![Create stack button](images/resource_manager_link.png)
+
+Click 'Create Stack':
+
+![Create stack button](images/create_stack_btn.png)
+
+Choose 'My Configuration', and upload the configuration zip:
+
+![Create stack button](images/stack_info_1.png)
+
+Enter name, description and choose the compartment, then click 'Next':
+
+![Create stack button](images/stack_info_2.png)
+
+Accept the default data in this section:
+
+![Create stack button](images/stack_var_1.png)
+
+And this section:
+
+![Create stack button](images/stack_var_2.png)
+
+Upload your public SSH key:
+
+![Create stack button](images/stack_var_3.png)
+
+Accept this data. Click 'Next', review and create your stack.
+
+![Create stack button](images/stack_var_4.png)
+
+On the stack details page, click 'Terraform Actions' and select 'Plan'.
+
+![Create stack button](images/stack_plan.png)
+
+Review the plan output, ensure no failures.
+
+![Create stack button](images/plan_log.png)
+
+Click 'Terraform Actions' and select 'Apply'.
+
+![Create stack button](images/stack_apply.png)
+
+Choose the plan you just created, then click 'Apply'.
+
+![Create stack button](images/stack_apply_2.png)
+
+Review the output, and collect the following values from the output:
+
+* tns_name
+* autonomous_database_admin_password
+* autonomous_database_schema_password
+* autonomous_database_wallet_password
+* atp_id
+
+## Create Secrets
+
+From Cloud Shell, download the script, make it executable, and run it:
 
 ```shell script
 wget https://raw.githubusercontent.com/recursivecodes/micronaut-data-jdbc-graal-atp/master/scripts/setup.sh
@@ -27,18 +78,5 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-The script will produce output for the values you should copy to your local machine.
+Enter the values that you copied from the TF output when prompted.
 
-Copy the following items from the script output:
-
-* Instance IP address
-* DB Admin Password
-* DB User Password
-* Vault OCID
-* Instance private key 
-
-Create a file called `~/.ssh/id_oci` containing the private key contents. This will be how you connect to the VM via SSH.
-
-```shell script
-ssh opc@[instance ip] -i ~/.ssh/id_oci
-```
