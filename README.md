@@ -13,6 +13,8 @@ Test application for Micronaut Data JDBC and GraalVM that uses Oracle Autonomous
 
 ### Create Schema in ATP
 
+TODO: How is this done? Need screenshots showing how a user goes to ATP and runs the below script 
+
 ```sql
 CREATE USER mnocidemo IDENTIFIED BY "$trongPassw0rd"; 
 GRANT CONNECT, RESOURCE TO mnocidemo; 
@@ -20,6 +22,8 @@ GRANT UNLIMITED TABLESPACE TO mnocidemo;
 ```
 
 ### Secrets
+
+TODO: How is the wallet downloaded?  Need screenshots and to explain how they get to the Wallet download page.
 
 Download your ATP wallet to your local machine. We'll first need to Base64 encode the wallet contents.
 
@@ -114,7 +118,7 @@ oraclecloud:
     use-instance-principal: false
     path-to-config: ~/.oci/config
     profile: NO_PASSPHRASE
-    region: US-PHOENIX-1
+    region: [REGION]
 ```
 
 Development Note: This will require `~/.oci/config` to exist on VM if we deploy to cloud. Optionally, we could create a `bootstrap-prod.yml` to specify Instance Principal auth and use that in prod with `-Dmicronaut.bootstrap.name`, but that would require the extra work of setting up Instance Principal auth via dynamic groups and policies.
