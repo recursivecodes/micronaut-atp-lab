@@ -14,5 +14,10 @@ jobs:
 
       - name: 'Build Stack'
         run: |
-          pwd
-          ls -la terraform/
+          zip -r stack.zip terraform
+
+      - name: 'Publish Stack'
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'stack.zip'
+          path: 'stack.zip'
