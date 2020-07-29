@@ -1,12 +1,14 @@
 # Micronaut + Micronaut Data + Graal
+
 ## Before You Begin
 
 This 2-hour lab walks you through the steps to use Micronaut, Micronaut Data
 and GraalVM native image to connected to an Oracle Database.
+
 1. Create an Oracle Cloud account
 1. Create an Autonomous Transaction Processing (ATP) Database
 1. Create an Oracle Compute instance and setup/configure
-1. Build an app with Micronaut, Micronaut Data and Graal
+1. Build an app with Micronaut, Micronaut Data and GraalVM
 1. Run your app in the cloud
 
 ### What Do You Need?
@@ -15,10 +17,11 @@ and GraalVM native image to connected to an Oracle Database.
 * [GitHub](https://github.com/) Account  
    If you do not already have a GitHub account, create one now
 * [Micronaut](https://micronaut.io/download.html)
-* [Graal](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.1.0)
+* [GraalVM](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.1.0)
 * [VS Code](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjijsO-we7qAhVjMX0KHdJTCgYQFjAAegQIBRAB&url=https%3A%2F%2Fcode.visualstudio.com%2Fdownload&usg=AOvVaw11fc5fOXYIyxQh75jYLjXg) or [IntelliJ](https://www.jetbrains.com/idea/download/#section=mac)
 
 ## Part 1 - Create an Oracle Always-Free Cloud Account
+
 1. Go to https://www.oracle.com/cloud/free/
 2. Click "Start for free"
 3. Populate the forms and create an account.
@@ -26,7 +29,9 @@ and GraalVM native image to connected to an Oracle Database.
    ![](images/cloudDashboard.png)
 
 ## Part 2 - Create a Compartments
- [Compartment](https://docs.cloud.oracle.com/iaas/Content/Identity/Tasks/managingcompartments.htm) are useful when you want to organize and isolate your cloud resources. Create a compartment for the objects used in this lab.
+
+A [Compartment](https://docs.cloud.oracle.com/iaas/Content/Identity/Tasks/managingcompartments.htm) is useful when you want to organize and isolate your cloud resources. Create a compartment for the objects used in this lab.
+
 1. Click the menu icon in the upper left corner.
 1. Scroll to the bottom, under Identity, click "Compartments".
    ![](images/compartmentMenu.png)
@@ -39,7 +44,9 @@ and GraalVM native image to connected to an Oracle Database.
 1. Click the "Oracle Cloud" logo to return to the dashboard.
 
 ## Part 3 - Create an ATP instance
+
 You will need a database to complete the exercises.  An Oracle Autonomous Database handles a lot of the background admin tasks for you so you can focus on your project.
+
 1. Click "Create an ATP database" in the Autonomous Transaction Processing box.  
    ![](images/cloudDashboard.png)
 1. Choose your new compartment.
@@ -63,21 +70,24 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
    ```
    ![](images/cloudSheelOcidEnv.png)  
 
-   The Oracle Autonomous Database uses an extra level of security in the form of a wallet containing access keys for your new Database.  
+The Oracle Autonomous Database uses an extra level of security in the form of a wallet containing access keys for your new Database.  
 
-   Once your ATP Database status is Available (the yellow box turns green) you can download the wallet inside the Cloud Shell using the pre-configured [OCI-CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
+Once your ATP Database status is Available (the yellow box turns green) you can download the wallet inside the Cloud Shell using the pre-configured [OCI-CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
 
-   You should change the password value in this command to something more secure.  
+You should change the password value in this command to something more secure.
+  
    **Note:** This password is for the .zip file, not your database.
 
-   In your **Cloud Shell**  
-   Enter the following.
-   ```
-   oci db autonomous-database generate-wallet --autonomous-database-id ${DB_OCID} --password Pw4ZipFile --file ~/Wallet_micronaut.zip
-   ```
+In your **Cloud Shell**  Enter the following.
+
+```bash
+oci db autonomous-database generate-wallet --autonomous-database-id ${DB_OCID} --password Pw4ZipFile --file ~/Wallet_micronaut.zip
+```
 
 ## Create a Compute instance
+
 An Oracle Compute instance is a Cloud VM that you will use to install and run all of the software for the lab.  
+
 1. Click "Create a VM instance" in the Compute box. In this lab the Compute Instance will be accessed from the Cloud Shell and a local Terminal via SSH.
    ![](images/cloudDashboard.png)
 1. Populate the name or keep the default.
@@ -210,8 +220,10 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
       1. Save the file
 
 ## Continue through the following section
+
 1. Micronaut [Micronaut](Micronaut.md)
 
 ## Want to Learn More?
+
 * [Oracle Cloud](http://www.oracle.com/cloud/free)
 * [Oracle Live Labs](https://oracle.github.io/learning-library/developer-library/)
