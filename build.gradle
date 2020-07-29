@@ -10,23 +10,11 @@ group "example.jdbc"
 repositories {
     mavenCentral()
     jcenter()
-    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
 }
 
 configurations {
     // for dependencies that are needed for development only
     developmentOnly
-
-    all {
-        resolutionStrategy {
-            eachDependency { DependencyResolveDetails details ->
-                // specifying a fixed version for all libraries with 'io.micronaut.data' group
-                if (details.requested.group == 'io.micronaut.data') {
-                    details.useVersion micronautDataVersion
-                }
-            }
-        }
-    }
 }
 
 dependencies {
@@ -45,10 +33,10 @@ dependencies {
     implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
     implementation("io.micronaut.data:micronaut-data-jdbc:$micronautDataVersion")
 
-    compile "io.micronaut:micronaut-discovery-client"
-    compile group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-vault', version: '1.19.4'
-    compile group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-secrets', version: '1.19.4'
-    compile group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-common', version: '1.19.4'
+    implementation "io.micronaut:micronaut-discovery-client"
+    implementation group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-vault', version: '1.19.4'
+    implementation group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-secrets', version: '1.19.4'
+    implementation group: 'com.oracle.oci.sdk', name: 'oci-java-sdk-common', version: '1.19.4'
     implementation "io.micronaut.sql:micronaut-jdbc"
 
     compileOnly platform("io.micronaut:micronaut-bom:$micronautVersion")
