@@ -12,7 +12,7 @@ ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /path/to/id_oci
 
 Download the latest Terraform configuration (stack.zip) from: 
 
-https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest
+https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/stack.zip
 
 Go to the Resource Manager:
 
@@ -78,7 +78,7 @@ Review the output, and collect the following values from the output:
 From Cloud Shell, download the script, make it executable, and run it:
 
 ```shell script
-wget https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh
+wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh
 chmod +x setup.sh
 ./setup.sh
 ```
