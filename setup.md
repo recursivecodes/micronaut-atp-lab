@@ -10,7 +10,9 @@ ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /path/to/id_oci
 
 ## Create Infrastructure
 
-Download the Terraform configuration Zip from https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/raw/tf/terraform/stack.zip
+Download the latest Terraform configuration (stack.zip) from: 
+
+https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases
 
 Go to the Resource Manager:
 
