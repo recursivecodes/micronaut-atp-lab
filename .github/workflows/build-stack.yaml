@@ -37,7 +37,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: 'Upload Release Asset'
+      - name: 'Upload Release Asset (Stack)'
         if: contains(github.ref, 'v')
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -48,3 +48,15 @@ jobs:
           asset_path: ./stack.zip
           asset_name: stack.zip
           asset_content_type: application/zip
+
+      - name: 'Upload Release Asset (Script)'
+        if: contains(github.ref, 'v')
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ./scripts/setup.sh
+          asset_name: setup.sh
+          asset_content_type: text/x-shellscript
