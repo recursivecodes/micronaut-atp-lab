@@ -1,6 +1,8 @@
 name: mn-data-jdbc-atp-build
 on:
   push:
+    tags:
+      - "v*"
     branches:
       - '*'
 jobs:
