@@ -15,4 +15,4 @@ jobs:
       - name: 'Build Stack'
         run: |
           pwd
-          ls -la ./mn-data-jdbc-atp-build/terraform
+          ls -la terraform/
