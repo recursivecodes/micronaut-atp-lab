@@ -3,8 +3,6 @@ on:
   push:
     tags:
       - "v*"
-    branches:
-      - '*'
 jobs:
   build-stack:
     name: Build Stack
@@ -16,7 +14,8 @@ jobs:
 
       - name: 'Build Stack'
         run: |
-          zip -r stack.zip terraform/*
+          cd terraform
+          zip -r ../stack.zip *
 
       - name: 'Publish Stack'
         uses: actions/upload-artifact@v2-preview
