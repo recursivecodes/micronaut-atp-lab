@@ -39,7 +39,7 @@ jobs:
 
       - name: 'Upload Release Asset (Stack)'
         if: contains(github.ref, 'v')
-        id: upload-release-asset
+        id: upload-release-asset-stack
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -51,7 +51,7 @@ jobs:
 
       - name: 'Upload Release Asset (Script)'
         if: contains(github.ref, 'v')
-        id: upload-release-asset
+        id: upload-release-asset-setup
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
