@@ -1,10 +1,13 @@
 # collect some info
+read -p "Enter Compartment OCID: " COMPARTMENT_ID
 read -p "Enter TNS Name [mnociatp_high]: " TNS_NAME
 TNS_NAME=${TNS_NAME:-mnociatp_high}
 read -p "Enter DB Admin Password: " -s DB_ADMIN_PASSWORD
 read -p "Enter DB Schema Password: " -s DB_USER_PASSWORD
 read -p "Enter Wallet Password: " -s WALLET_PASSWORD
 read -p "Enter ATP DB OCID: " ATP_ID
+read -p "Enter Vault OCID: " VAULT_ID
+read -p "Enter Key OCID: " KEY_ID
 
 # clean up past runs
 rm -rf /tmp/wallet /tmp/wallet-encoded

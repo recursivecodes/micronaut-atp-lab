@@ -62,11 +62,14 @@ Choose the plan you just created, then click 'Apply'.
 
 Review the output, and collect the following values from the output:
 
+* compartment_id
 * tns_name
 * autonomous_database_admin_password
 * autonomous_database_schema_password
 * autonomous_database_wallet_password
 * atp_id
+* vault_id
+* key_id
 
 ## Create Secrets
 

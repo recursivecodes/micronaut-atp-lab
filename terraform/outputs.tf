@@ -71,8 +71,16 @@ output "vault" {
   value = oci_kms_vault.this
 }
 
+output "vault_id" {
+  value = oci_kms_vault.this.id
+}
+
 output "key" {
   value = oci_kms_key.this
+}
+
+output "key_id" {
+  value = oci_kms_key.this.id
 }
 
 output "tns_name" {
@@ -81,4 +89,8 @@ output "tns_name" {
 
 output "atp_id" {
   value = oci_database_autonomous_database.autonomous_database.id
+}
+
+output "compartment_id" {
+  value = oci_kms_vault.this.compartment_id
 }
