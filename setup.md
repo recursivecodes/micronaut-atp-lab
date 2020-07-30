@@ -84,6 +84,8 @@ Collect the following values from the output:
 * key_ocid
 * region
 
+**Note:** Java will be installed upon the first boot of the image. It will take 3-5 minutes to install, so it will not be *immediately* available in the VM.
+
 ## Create Secrets
 
 From Cloud Shell, download the script, make it executable, and run it:
