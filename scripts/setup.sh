@@ -1,13 +1,17 @@
 # collect some info
-read -p "Enter Compartment OCID: " COMPARTMENT_ID
-read -p "Enter TNS Name [mnociatp_high]: " TNS_NAME
+read -p "Enter 'compartment_ocid': " COMPARTMENT_ID
+read -p "Enter 'tns_name' [mnociatp_high]: " TNS_NAME
 TNS_NAME=${TNS_NAME:-mnociatp_high}
-read -p "Enter DB Admin Password: " -s DB_ADMIN_PASSWORD
-read -p "Enter DB Schema Password: " -s DB_USER_PASSWORD
-read -p "Enter Wallet Password: " -s WALLET_PASSWORD
-read -p "Enter ATP DB OCID: " ATP_ID
-read -p "Enter Vault OCID: " VAULT_ID
-read -p "Enter Key OCID: " KEY_ID
+read -p "Enter 'atp_admin_password': " -s DB_ADMIN_PASSWORD
+echo '\n'
+read -p "Enter 'atp_schema_password': " -s DB_USER_PASSWORD
+echo '\n'
+read -p "Enter 'atp_wallet_password': " -s WALLET_PASSWORD
+echo '\n'
+read -p "Enter 'atp_db_ocid': " ATP_ID
+read -p "Enter 'vault_ocid': " VAULT_ID
+read -p "Enter 'key_ocid': " KEY_ID
+read -p "Enter 'region': " REGION
 
 # clean up past runs
 rm -rf /tmp/wallet /tmp/wallet-encoded
@@ -56,7 +60,7 @@ echo "Creating secrets in vault..."
 echo "Creating CWALLET_SSO secret..."
 export SECRET_CWALLET_SSO=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name CWALLET_SSO \
+  --secret-name WALLET_CWALLET_SSO \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -67,7 +71,7 @@ export SECRET_CWALLET_SSO=$(oci vault secret create-base64 \
 export SECRET_EWALLET_P12=$(echo "Creating EWALLET_P12 secret..."
 oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name EWALLET_P12 \
+  --secret-name WALLET_EWALLET_P12 \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -78,7 +82,7 @@ oci vault secret create-base64 \
 echo "Creating KEYSTORE_JKS secret..."
 export SECRET_KEYSTORE_JKS=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name KEYSTORE_JKS \
+  --secret-name WALLET_KEYSTORE_JKS \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -89,7 +93,7 @@ export SECRET_KEYSTORE_JKS=$(oci vault secret create-base64 \
 echo "Creating OJDBC_PROPERTIES secret..."
 export SECRET_OJDBC_PROPERTIES=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name OJDBC_PROPERTIES \
+  --secret-name WALLET_OJDBC_PROPERTIES \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -100,7 +104,7 @@ export SECRET_OJDBC_PROPERTIES=$(oci vault secret create-base64 \
 echo "Creating SQLNET_ORA secret..."
 export SECRET_SQLNET_ORA=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name SQLNET_ORA \
+  --secret-name WALLET_SQLNET_ORA \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -111,7 +115,7 @@ export SECRET_SQLNET_ORA=$(oci vault secret create-base64 \
 echo "Creating TNSNAMES_ORA secret..."
 export SECRET_TNSNAMES_ORA=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name TNSNAMES_ORA \
+  --secret-name WALLET_TNSNAMES_ORA \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -122,7 +126,7 @@ export SECRET_TNSNAMES_ORA=$(oci vault secret create-base64 \
 echo "Creating TRUSTSTORE_JKS secret..."
 export SECRET_TRUSTSTORE_JKS=$(oci vault secret create-base64 \
   --compartment-id $COMPARTMENT_ID \
-  --secret-name TRUSTSTORE_JKS \
+  --secret-name WALLET_TRUSTSTORE_JKS \
   --vault-id $VAULT_ID \
   --key-id $KEY_ID \
   --wait-for-state ACTIVE \
@@ -142,6 +146,44 @@ export SECRET_MICRONAUT_OCI_DEMO_PASSWORD=$(oci vault secret create-base64 \
 
 echo "Secrets created!"
 echo "All secrets have been created!"
+
+echo 'Paste this into your src/main/resources/application.yml:'
+
+echo "datasources:"
+echo "  default:"
+echo "    url: jdbc:oracle:thin:@${TNS_NAME}?TNS_ADMIN=/tmp/demo-wallet"
+echo "    driverClassName: oracle.jdbc.OracleDriver"
+echo "    username: mnocidemo"
+echo "    password: \${MICRONAUT_OCI_DEMO_PASSWORD}"
+echo "    schema-generate: CREATE_DROP"
+echo "    dialect: ORACLE"
+
+echo 'Paste this into your src/main/resources/bootstrap.yml:'
+
+echo "oraclecloud:"
+echo "  vault:"
+echo "    config:"
+echo "      enabled: true"
+echo "    vaults:"
+echo "      - ocid: ${VAULT_ID}"
+echo "        compartment-ocid: ${COMPARTMENT_ID}"
+echo "    use-instance-principal: false"
+echo "    path-to-config: ~/.oci/config"
+echo "    profile: DEFAULT"
+echo "    region: ${REGION}"
+
+echo 'Paste this into your src/main/resources/bootstrap-prod.yml:'
+
+echo "oraclecloud:"
+echo "  vault:"
+echo "    config:"
+echo "      enabled: true"
+echo "    vaults:"
+echo "      - ocid: ${VAULT_ID}"
+echo "        compartment-ocid: ${COMPARTMENT_ID}"
+echo "    use-instance-principal: true"
+echo "    profile: DEFAULT"
+echo "    region: ${REGION}"
 
 # clean up files
 rm -rf /tmp/wallet /tmp/wallet-encoded

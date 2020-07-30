@@ -4,68 +4,68 @@ import io.micronaut.context.annotation.ConfigurationProperties;
 
 @ConfigurationProperties("wallet")
 public class WalletConfig {
-    private byte[] TRUSTSTORE_JKS;
-    private String TNSNAMES_ORA;
-    private String SQLNET_ORA;
-    private String OJDBC_PROPERTIES;
-    private byte[] KEYSTORE_JKS;
-    private byte[] EWALLET_P12;
-    private byte[] CWALLET_SSO;
+    private byte[] truststoreJks;
+    private String tnsnamesOra;
+    private String sqlnetOra;
+    private String ojdbcProperties;
+    private byte[] keystoreJks;
+    private byte[] ewalletP12;
+    private byte[] cwalletSso;
 
 
-    public byte[] getTRUSTSTORE_JKS() {
-        return TRUSTSTORE_JKS;
+    public byte[] getTruststoreJks() {
+        return truststoreJks;
     }
 
-    public void setTRUSTSTORE_JKS(byte[] TRUSTSTORE_JKS) {
-        this.TRUSTSTORE_JKS = TRUSTSTORE_JKS;
+    public void setTruststoreJks(byte[] truststoreJks) {
+        this.truststoreJks = truststoreJks;
     }
 
-    public String getTNSNAMES_ORA() {
-        return TNSNAMES_ORA;
+    public String getTnsnamesOra() {
+        return tnsnamesOra;
     }
 
-    public void setTNSNAMES_ORA(String TNSNAMES_ORA) {
-        this.TNSNAMES_ORA = TNSNAMES_ORA;
+    public void setTnsnamesOra(String tnsnamesOra) {
+        this.tnsnamesOra = tnsnamesOra;
     }
 
-    public String getSQLNET_ORA() {
-        return SQLNET_ORA;
+    public String getSqlnetOra() {
+        return sqlnetOra;
     }
 
-    public void setSQLNET_ORA(String SQLNET_ORA) {
-        this.SQLNET_ORA = SQLNET_ORA;
+    public void setSqlnetOra(String sqlnetOra) {
+        this.sqlnetOra = sqlnetOra;
     }
 
-    public String getOJDBC_PROPERTIES() {
-        return OJDBC_PROPERTIES;
+    public String getOjdbcProperties() {
+        return ojdbcProperties;
     }
 
-    public void setOJDBC_PROPERTIES(String OJDBC_PROPERTIES) {
-        this.OJDBC_PROPERTIES = OJDBC_PROPERTIES;
+    public void setOjdbcProperties(String ojdbcProperties) {
+        this.ojdbcProperties = ojdbcProperties;
     }
 
-    public byte[] getKEYSTORE_JKS() {
-        return KEYSTORE_JKS;
+    public byte[] getKeystoreJks() {
+        return keystoreJks;
     }
 
-    public void setKEYSTORE_JKS(byte[] KEYSTORE_JKS) {
-        this.KEYSTORE_JKS = KEYSTORE_JKS;
+    public void setKeystoreJks(byte[] keystoreJks) {
+        this.keystoreJks = keystoreJks;
     }
 
-    public byte[] getEWALLET_P12() {
-        return EWALLET_P12;
+    public byte[] getEwalletP12() {
+        return ewalletP12;
     }
 
-    public void setEWALLET_P12(byte[] EWALLET_P12) {
-        this.EWALLET_P12 = EWALLET_P12;
+    public void setEwalletP12(byte[] ewalletP12) {
+        this.ewalletP12 = ewalletP12;
     }
 
-    public byte[] getCWALLET_SSO() {
-        return CWALLET_SSO;
+    public byte[] getCwalletSso() {
+        return cwalletSso;
     }
 
-    public void setCWALLET_SSO(byte[] CWALLET_SSO) {
-        this.CWALLET_SSO = CWALLET_SSO;
+    public void setCwalletSso(byte[] cwalletSso) {
+        this.cwalletSso = cwalletSso;
     }
 }

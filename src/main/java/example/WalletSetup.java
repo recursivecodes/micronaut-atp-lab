@@ -24,13 +24,13 @@ public class WalletSetup implements BeanCreatedEventListener<BasicJdbcConfigurat
     @Override
     public BasicJdbcConfiguration onCreated(BeanCreatedEvent<BasicJdbcConfiguration> event) {
         Map<String, Object> walletFiles = CollectionUtils.mapOf(
-                "cwallet.sso",  config.getCWALLET_SSO(),
-                        "ewallet.p12",  config.getEWALLET_P12(),
-                        "keystore.jks",  config.getKEYSTORE_JKS(),
-                        "ojdbc.properties",  config.getOJDBC_PROPERTIES(),
-                        "sqlnet.ora",  config.getSQLNET_ORA(),
-                        "tnsnames.ora",  config.getTNSNAMES_ORA(),
-                        "truststore.jks", config.getTRUSTSTORE_JKS()
+                "cwallet.sso",  config.getCwalletSso(),
+                        "ewallet.p12",  config.getEwalletP12(),
+                        "keystore.jks",  config.getKeystoreJks(),
+                        "ojdbc.properties",  config.getOjdbcProperties(),
+                        "sqlnet.ora",  config.getSqlnetOra(),
+                        "tnsnames.ora",  config.getTnsnamesOra(),
+                        "truststore.jks", config.getTruststoreJks()
         );
 
         if( !walletDir.exists() ) {
@@ -52,7 +52,7 @@ public class WalletSetup implements BeanCreatedEventListener<BasicJdbcConfigurat
         }
     }
 
-    private void writeWalletFile(String key, Object value) throws IOException {
+    private void writeWalletFile(String key, Object value) {
         try {
             File walletFile = new File(walletDir + "/" + key);
             if(value instanceof String) {

@@ -1,5 +1,11 @@
 # Setup
 
+## Setup OCI CLI Profile On Local Machine
+
+Follow instructions here:
+
+https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsconfigureocicli.htm
+
 ## Create an SSH Keypair
 
 For example:
@@ -62,16 +68,22 @@ Choose the plan you just created, then click 'Apply'.
 
 ![Create stack button](images/stack_apply_2.png)
 
-Review the output, and collect the following values from the output:
+Review the output:
 
-* compartment_id
+
+
+
+Collect the following values from the output:
+
+* compartment_ocid
 * tns_name
-* autonomous_database_admin_password
-* autonomous_database_schema_password
-* autonomous_database_wallet_password
-* atp_id
-* vault_id
-* key_id
+* atp_admin_password
+* atp_schema_password
+* atp_wallet_password
+* atp_db_ocid
+* vault_ocid
+* key_ocid
+* region
 
 ## Create Secrets
 
@@ -84,4 +96,49 @@ chmod +x setup.sh
 ```
 
 Enter the values that you copied from the TF output when prompted.
+
+The script will produce YAML output to paste into `application.yml`. For example: 
+
+```yaml
+datasources:
+  default:
+    url: jdbc:oracle:thin:@mnociatp_high?TNS_ADMIN=/tmp/demo-wallet
+    driverClassName: oracle.jdbc.OracleDriver
+    username: mnocidemo
+    password: ${MICRONAUT_OCI_DEMO_PASSWORD}
+    schema-generate: CREATE_DROP
+    dialect: ORACLE
+```
+
+And, output to create a file called `src/main/resources/bootstrap.yml`. For example:
+
+```yaml
+oraclecloud:
+  vault:
+    config:
+      enabled: true
+    vaults:
+      - ocid: ocid...
+        compartment-ocid: ocid...
+    use-instance-principal: false
+    path-to-config: ~/.oci/config
+    profile: DEFAULT
+    region: us-phoenix-1
+```
+
+And, output to create a file called `src/main/resources/bootstrap-prod.yml`. For example:
+
+```yaml 
+oraclecloud:
+  vault:
+    config:
+      enabled: true
+    vaults:
+      - ocid: ocid...
+        compartment-ocid: ocid...
+    use-instance-principal: true
+    profile: DEFAULT
+    region: us-phoenix-1
+```
+
 
