@@ -2,10 +2,6 @@ variable "compartment_ocid" {}
 variable "tenancy_ocid" {}
 variable "region" {}
 
-variable "custom_image_id" {
-  default = "ocid1.image.oc1..aaaaaaaa2es7kqqgmmjyymzdaaeqmmehrprg6gdjxs4on5lpzwiv64przksa"
-}
-
 variable "instance_display_name" {
   default = "mn-oci-demo"
 }
@@ -22,9 +18,11 @@ variable "vnic_name" {
   default = "vnic"
 }
 variable "ssh_public_key" {}
+
 variable "user_data" {
-  default = "IyEvYmluL3NoCnN1ZG8gZmlyZXdhbGwtY21kIC0tcGVybWFuZW50IC0tem9uZT1wdWJsaWMgLS1hZGQtcG9ydD04MDgwL3RjcApzdWRvIGZpcmV3YWxsLWNtZCAtLXJlbG9hZApzdWRvIHNoIC1jICdlY2hvICJXZWxjb21lIE1pY3JvbmF1dCBIT0wgQXR0ZW5kZWUhIiA+IC9ldGMvbW90ZCcK"
+  default = "IyEvYmluL3NoCiMgdGhpcyBzY3JpcHQgaXMgdXNlZCB0byBnZW5lcmF0ZSB0aGUgInVzZXJfZGF0YSIgaW4gYHNldHVwLnNoYAojIGJhc2U2NCBlbmNvZGUgdGhpcyBmaWxlIGFuZCBzZXQgaXQgaW4gdGVycmFmb3JtL3ZhcmlhYmxlcy50ZiwgYW5kIHdoYXRldmVyIGlzIGluIHRoaXMgc2NyaXB0IHdpbGwgYmUgcnVuIGF0IHN0YXJ0dXAgb2YgdGhlIFZNCnN1ZG8gZmlyZXdhbGwtY21kIC0tcGVybWFuZW50IC0tem9uZT1wdWJsaWMgLS1hZGQtcG9ydD04MDgwL3RjcApzdWRvIGZpcmV3YWxsLWNtZCAtLXJlbG9hZApzdWRvIHNoIC1jICdlY2hvICJKYXZhIFZlcnNpb24gSW5zdGFsbGVkOiBgamF2YSAtdmVyc2lvbmAiID4gL2V0Yy9tb3RkJwpzdWRvIHNoIC1jICdlY2hvICJXZWxjb21lIE1pY3JvbmF1dCBIT0wgQXR0ZW5kZWUhIiA+IC9ldGMvbW90ZCcKc3VkbyB5dW0gaW5zdGFsbCAteSBqZGstMTEuMC43Lng4Nl82NAo="
 }
+
 variable "block_storage_size_in_gbs" {
   default = 50
 }

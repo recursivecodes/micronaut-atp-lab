@@ -87,7 +87,7 @@ resource "oci_core_instance" "this" {
   source_details {
     boot_volume_size_in_gbs = var.boot_volume_size_in_gbs
     source_type = "image"
-    source_id   = var.custom_image_id
+    source_id   = data.oci_core_images.this.images[0].id
   }
 
 }
