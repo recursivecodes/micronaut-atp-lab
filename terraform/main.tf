@@ -160,7 +160,10 @@ data "oci_database_autonomous_databases" "autonomous_databases" {
 
 resource "random_string" "autonomous_database_wallet_password" {
   length  = 16
-  special = true
+  min_numeric = 1
+  min_lower   = 1
+  min_upper   = 1
+  min_special = 1
   override_special = "_"
 }
 
