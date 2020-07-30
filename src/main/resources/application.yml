@@ -4,11 +4,12 @@ micronaut:
 jackson:
   bean-introspection-module: true
 ---
-datasources:
-  default:
-    url: jdbc:oracle:thin:@demodb_high?TNS_ADMIN=/tmp/demo-wallet
-    driverClassName: oracle.jdbc.OracleDriver
-    username: mnocidemo
-    password: ${MICRONAUT_OCI_DEMO_PASSWORD}
-    schema-generate: CREATE_DROP
-    dialect: ORACLE
+wallet:
+  TRUSTSTORE_JKS: ${WALLET_TRUSTSTORE_JKS}
+  TNSNAMES_ORA: ${WALLET_TNSNAMES_ORA}
+  SQLNET_ORA: ${WALLET_SQLNET_ORA}
+  OJDBC_PROPERTIES: ${WALLET_OJDBC_PROPERTIES}
+  KEYSTORE_JKS: ${WALLET_KEYSTORE_JKS}
+  EWALLET_P12: ${WALLET_EWALLET_P12}
+  CWALLET_SSO: ${WALLET_CWALLET_SSO}
+---

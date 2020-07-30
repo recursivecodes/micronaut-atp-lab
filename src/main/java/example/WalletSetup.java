@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Singleton
 public class WalletSetup implements BeanCreatedEventListener<BasicJdbcConfiguration> {
-    private final File walletDir = new File("/tmp", "demo-wallet");
+    private final File walletDir = new File("/tmp", "wallet");
     private final WalletConfig config;
 
     public WalletSetup(WalletConfig config) {
@@ -32,10 +32,11 @@ public class WalletSetup implements BeanCreatedEventListener<BasicJdbcConfigurat
                         "tnsnames.ora",  config.getTnsnamesOra(),
                         "truststore.jks", config.getTruststoreJks()
         );
-
-        if( !walletDir.exists() ) {
-            createWallet(walletDir, walletFiles);
+        // always create a fresh wallet at startup (in case something has changed)
+        if(walletDir.exists()) {
+            walletDir.delete();
         }
+        createWallet(walletDir, walletFiles);
         return event.getBean();
     }
 

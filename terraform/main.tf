@@ -184,7 +184,7 @@ resource "oci_kms_key" "this" {
   display_name = "mn-oci-key"
   key_shape {
     algorithm = "AES"
-    length = "32"
+    length = "16"
   }
   management_endpoint = oci_kms_vault.this.management_endpoint
 }

@@ -151,7 +151,7 @@ echo 'Paste this into your src/main/resources/application.yml:'
 
 echo "datasources:"
 echo "  default:"
-echo "    url: jdbc:oracle:thin:@${TNS_NAME}?TNS_ADMIN=/tmp/demo-wallet"
+echo "    url: jdbc:oracle:thin:@${TNS_NAME}?TNS_ADMIN=/tmp/wallet"
 echo "    driverClassName: oracle.jdbc.OracleDriver"
 echo "    username: mnocidemo"
 echo "    password: \${MICRONAUT_OCI_DEMO_PASSWORD}"
