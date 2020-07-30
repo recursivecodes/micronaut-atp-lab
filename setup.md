@@ -70,8 +70,7 @@ Choose the plan you just created, then click 'Apply'.
 
 Review the output:
 
-
-
+![Create stack button](images/tf_output.png)
 
 Collect the following values from the output:
 
@@ -141,4 +140,11 @@ oraclecloud:
     region: us-phoenix-1
 ```
 
+## Deploy
 
+TODO: finish...
+
+When running on VM, do:
+```shell script
+java -jar -Dmicronaut.bootstrap.name bootstrap-prod /path/to/your.jar
+```

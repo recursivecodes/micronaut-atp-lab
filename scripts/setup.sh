@@ -1,17 +1,17 @@
 # collect some info
-read -p "Enter 'compartment_ocid': " COMPARTMENT_ID
-read -p "Enter 'tns_name' [mnociatp_high]: " TNS_NAME
+read -p -n "Enter 'compartment_ocid': " COMPARTMENT_ID
+read -p -n "Enter 'tns_name' [mnociatp_high]: " TNS_NAME
 TNS_NAME=${TNS_NAME:-mnociatp_high}
-read -p "Enter 'atp_admin_password': " -s DB_ADMIN_PASSWORD
-echo '\n'
-read -p "Enter 'atp_schema_password': " -s DB_USER_PASSWORD
-echo '\n'
-read -p "Enter 'atp_wallet_password': " -s WALLET_PASSWORD
-echo '\n'
-read -p "Enter 'atp_db_ocid': " ATP_ID
-read -p "Enter 'vault_ocid': " VAULT_ID
-read -p "Enter 'key_ocid': " KEY_ID
-read -p "Enter 'region': " REGION
+read -p -n "Enter 'atp_admin_password': " -s DB_ADMIN_PASSWORD
+echo
+read -p -n "Enter 'atp_schema_password': " -s DB_USER_PASSWORD
+echo
+read -p -n "Enter 'atp_wallet_password': " -s WALLET_PASSWORD
+echo
+read -p -n "Enter 'atp_db_ocid': " ATP_ID
+read -p -n "Enter 'vault_ocid': " VAULT_ID
+read -p -n "Enter 'key_ocid': " KEY_ID
+read -p -n "Enter 'region': " REGION
 
 # clean up past runs
 rm -rf /tmp/wallet /tmp/wallet-encoded
