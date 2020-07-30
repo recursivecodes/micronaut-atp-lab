@@ -42,13 +42,7 @@ public class WalletSetup implements BeanCreatedEventListener<BasicJdbcConfigurat
     private void createWallet(File walletDir, Map<String, Object> walletFiles) {
         walletDir.mkdirs();
         for (String key : walletFiles.keySet()) {
-            try {
-                writeWalletFile(key, walletFiles.get(key));
-            }
-            catch (IOException e) {
-                walletDir.delete();
-                e.printStackTrace();
-            }
+            writeWalletFile(key, walletFiles.get(key));
         }
     }
 

@@ -20,10 +20,17 @@ rm -f /tmp/id_oci /tmp/id_oci.pub
 # download wallet
 echo "Downloading wallet..."
 export WALLET=$(oci db autonomous-database generate-wallet \
+                --autonomous-database-id ocid1.autonomousdatabase.oc1.iad.abuwcljs4bcke5dar3xpy3nx3ppfd6vqhtm5gzskvuzqqbiiglllgbqcvl6a \
+                --file /tmp/wallet.zip \
+                --password v>@C\!b\{=j+7_cY9u)
+echo "Wallet downloaded!"
+
+/*
+oci db autonomous-database generate-wallet \
                 --autonomous-database-id $ATP_ID \
                 --file /tmp/wallet.zip \
-                --password $WALLET_PASSWORD)
-echo "Wallet downloaded!"
+                --password $WALLET_PASSWORD
+*/
 
 # unzip wallet
 unzip /tmp/wallet.zip -d /tmp/wallet

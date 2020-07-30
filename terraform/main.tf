@@ -112,6 +112,7 @@ resource "random_string" "autonomous_database_admin_password" {
   min_lower   = 1
   min_upper   = 1
   min_special = 1
+  override_special = "_"
 }
 
 resource "random_string" "autonomous_database_schema_password" {
@@ -120,6 +121,7 @@ resource "random_string" "autonomous_database_schema_password" {
   min_lower   = 1
   min_upper   = 1
   min_special = 1
+  override_special = "_"
 }
 
 data "oci_database_autonomous_db_versions" "test_autonomous_db_versions" {
@@ -159,6 +161,7 @@ data "oci_database_autonomous_databases" "autonomous_databases" {
 resource "random_string" "autonomous_database_wallet_password" {
   length  = 16
   special = true
+  override_special = "_"
 }
 
 data "oci_database_autonomous_database_wallet" "autonomous_database_wallet" {
