@@ -1,5 +1,17 @@
 # Setup
 
+Table of Contents
+=================
+
+  * [Setup OCI CLI Profile On Local Machine](#setup-oci-cli-profile-on-local-machine)
+  * [Create an SSH Keypair](#create-an-ssh-keypair)
+  * [Create Infrastructure](#create-infrastructure)
+  * [Create DB Schema](#create-db-schema)
+  * [Download Wallet (Locally)](#download-wallet-locally)
+  * [Run Application (Locally)](#run-application-locally)
+  * [Deploy (From Local To VM)](#deploy-from-local-to-vm)
+  * [Destroy](#destroy)
+
 ## Setup OCI CLI Profile On Local Machine
 
 Follow instructions here:
