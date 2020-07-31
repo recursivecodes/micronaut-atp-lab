@@ -49,7 +49,7 @@ for f in /tmp/wallet/*
  do
    fname=$(basename $f)
    echo "Writing /tmp/wallet-encoded/$fname"
-   base64 -i $f > /tmp/wallet-encoded/$fname
+   base64 -i -w 0 $f > /tmp/wallet-encoded/$fname
  done
 echo "Wallet contents encoded!"
 
