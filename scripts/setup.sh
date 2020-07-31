@@ -39,26 +39,31 @@ echo "GRANT CONNECT, RESOURCE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWO
 echo "GRANT UNLIMITED TABLESPACE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWORD@mnociatp_high
 echo "Schema 'mnocidemo' created!"
 echo
-echo "Run your app (locally) with:"
+echo "Step 1: Run the following (locally) to download your wallet:"
+echo
+echo "oci db autonomous-database generate-wallet --autonomous-database-id $ATP_ID --file /tmp/wallet.zip --password $WALLET_PASSWORD && unzip /tmp/wallet.zip -d /tmp/wallet"
+echo
+echo "Step 2: Run your app (locally) with:"
 echo
 echo "./gradlew -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} run"
 echo
-echo "Upload your zip (one time, from local machine to VM) with:"
+echo "Step 3: Upload your zip (one time, from local machine to VM) with:"
 echo
 echo "scp -i ~/.ssh/id_oci -r /tmp/wallet opc@${PUBLIC_IP}:/tmp/wallet"
 echo
-echo "Deploy your JAR (from local machine to VM) with:"
+echo "Step 4: Deploy your JAR (from local machine to VM) with:"
 echo
 echo "scp -i ~/.ssh/id_oci -r build/libs/micronaut-data-jdbc-graal-atp-0.1-all.jar opc@${PUBLIC_IP}:/app"
 echo
-echo "SSH into your VM and run your JAR on the VM with:"
+echo "Step 5: SSH into your VM"
+echo
+echo "ssh -i ~/.ssh/id_oci opc@${PUBLIC_IP}"
+echo
+echo "Step 6: Run your JAR on the VM with:"
 echo
 echo "java -jar -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} /app/micronaut-data-jdbc-graal-atp-0.1-all.jar"
-echo
-echo "Run the following (locally) to download your wallet:"
-echo
-echo "oci db autonomous-database generate-wallet --autonomous-database-id $ATP_ID --file /tmp/wallet.zip --password $WALLET_PASSWORD && unzip /tmp/wallet.zip -d /tmp/wallet"
 echo
 echo "Done!"
 
 ## Clean Up
+rm -rf /tmp/wallet /tmp/wallet-encoded
