@@ -15,14 +15,6 @@ output "atp_wallet_password" {
   value = random_string.autonomous_database_wallet_password.result
 }
 
-output "vault_ocid" {
-  value = oci_kms_vault.this.id
-}
-
-output "key_ocid" {
-  value = oci_kms_key.this.id
-}
-
 output "tns_name" {
   value = "${oci_database_autonomous_database.autonomous_database.db_name}_high"
 }
@@ -32,9 +24,13 @@ output "atp_db_ocid" {
 }
 
 output "compartment_ocid" {
-  value = oci_kms_vault.this.compartment_id
+  value = oci_core_instance.this.compartment_id
 }
 
 output "region" {
   value = var.region
+}
+
+output "wallet" {
+  value = local_file.autonomous_data_warehouse_wallet_file
 }

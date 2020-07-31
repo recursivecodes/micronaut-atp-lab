@@ -173,18 +173,7 @@ data "oci_database_autonomous_database_wallet" "autonomous_database_wallet" {
   base64_encode_content  = "true"
 }
 
-resource "oci_kms_vault" "this" {
-  compartment_id = var.compartment_ocid
-  display_name = "mn-oci-vault"
-  vault_type = "DEFAULT"
-}
-
-resource "oci_kms_key" "this" {
-  compartment_id = var.compartment_ocid
-  display_name = "mn-oci-key"
-  key_shape {
-    algorithm = "AES"
-    length = "16"
-  }
-  management_endpoint = oci_kms_vault.this.management_endpoint
+resource "local_file" "autonomous_data_warehouse_wallet_file" {
+  content_base64 = oci_database_autonomous_database_wallet.autonomous_database_wallet.content
+  filename       = "${path.module}/autonomous_data_warehouse_wallet.zip"
 }
