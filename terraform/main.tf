@@ -92,20 +92,6 @@ resource "oci_core_instance" "this" {
 
 }
 
-resource "oci_core_volume" "this" {
-  availability_domain = oci_core_instance.this.availability_domain
-  compartment_id      = var.compartment_ocid
-  display_name        = "${oci_core_instance.this.display_name}_volume_0"
-  size_in_gbs         = var.block_storage_size_in_gbs
-}
-
-resource "oci_core_volume_attachment" "this" {
-  attachment_type = var.attachment_type
-  compartment_id  = var.compartment_ocid
-  instance_id     = oci_core_instance.this.id
-  volume_id       = oci_core_volume.this.id
-}
-
 resource "random_string" "autonomous_database_admin_password" {
   length      = 16
   min_numeric = 1
