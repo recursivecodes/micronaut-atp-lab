@@ -10,39 +10,13 @@ Test application for Micronaut Data JDBC and GraalVM that uses Oracle Autonomous
 4. Resource Manager stack created See: [setup.md](setup.md)
 5. `setup.sh` script executed on **local machine**. See: [setup.md](setup.md)
 
-## Setup
+## Setup, Run, Build & Deploy
 
 **Note:** Please read [setup.md](setup.md)!
-
-## Run
-
-Run the app with the snippet provided from the output of `setup.sh`
-
-Should result in similar output:
-
-```shell script
-```
-
-## Build
-
-With:
-
-```shell script
-$ ./gradlew assemble
-```
-
-Run the JAR with:
-
-```shell script
-```
 
 ## Native Image
 
 TODO: Populate, if we can get it to work...
-
-## Deploy
-
-TODO: Are we going to deploy?
 
 ## Test
 
