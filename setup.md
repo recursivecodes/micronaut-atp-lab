@@ -91,6 +91,7 @@ From Cloud Shell, download the following script, make it executable, and run it:
 **Note:** If you did not [setup your OCI config](#setup-oci-cli-profile-on-local-machine) earlier, this step will not work.
 
 ```shell script
+# run in Cloud Shell
 wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh
 chmod +x setup.sh
 ./setup.sh
