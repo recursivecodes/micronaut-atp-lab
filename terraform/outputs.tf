@@ -30,7 +30,3 @@ output "compartment_ocid" {
 output "region" {
   value = var.region
 }
-
-output "wallet" {
-  value = local_file.autonomous_data_warehouse_wallet_file
-}
