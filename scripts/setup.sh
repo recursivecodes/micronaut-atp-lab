@@ -41,7 +41,7 @@ echo "Schema 'mnocidemo' created!"
 echo
 echo "Run your app (locally) with:"
 echo
-echo "./gradlew -DMICRONAUT_OCI_DEMO_PASSWORD ${MICRONAUT_OCI_DEMO_PASSWORD} run"
+echo "./gradlew -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} run"
 echo
 echo "Upload your zip (one time, from local machine to VM) with:"
 echo
@@ -53,6 +53,12 @@ echo "scp -i ~/.ssh/id_oci -r build/libs/micronaut-data-jdbc-graal-atp-0.1-all.j
 echo
 echo "SSH into your VM and run your JAR on the VM with:"
 echo
-echo "java -jar -DMICRONAUT_OCI_DEMO_PASSWORD ${MICRONAUT_OCI_DEMO_PASSWORD} /app/micronaut-data-jdbc-graal-atp-0.1-all.jar"
+echo "java -jar -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} /app/micronaut-data-jdbc-graal-atp-0.1-all.jar"
+echo
+echo "Run the following (locally) to download your wallet:"
+echo
+echo "oci db autonomous-database generate-wallet --autonomous-database-id $ATP_ID --file /tmp/wallet.zip --password $WALLET_PASSWORD && unzip /tmp/wallet.zip -d /tmp/wallet"
 echo
 echo "Done!"
+
+## Clean Up

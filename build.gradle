@@ -70,6 +70,10 @@ java {
     targetCompatibility = JavaVersion.toVersion('1.8')
 }
 
+tasks.withType(JavaExec) {
+    systemProperties = System.getProperties()
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
     options.compilerArgs.addAll([
