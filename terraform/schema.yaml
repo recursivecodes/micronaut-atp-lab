@@ -46,13 +46,6 @@ variableGroups:
 
 variables:
 
-  compartment_ocid:
-    type: oci:identity:compartment:id
-    # type: string
-    required: true
-    title: ${Messages.solutionsHub.genericVariables.compartment.title()}
-    description: ${Messages.solutionsHub.genericVariables.compartment.description()}
-
   region:
     type: oci:identity:region:name
     required: true
@@ -116,7 +109,7 @@ variables:
     description: ${Messages.solutionsHub.solutions.computeInstance.variables.shape.description()}
     default: "VM.Standard.E2.1.Micro"
     dependsOn:
-      compartmentId: compartment_ocid
+      compartmentId: tenancy_ocid
 
   assign_public_ip:
     type: boolean
