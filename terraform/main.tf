@@ -2,15 +2,20 @@ terraform {
   required_version = ">= 0.12.0"
 }
 
+resource "oci_identity_compartment" "this" {
+  description = "Micronaut HOL Compartment"
+  name = "mn-oci-hol"
+}
+
 resource oci_core_vcn this {
   dns_label      = var.vcn_dns_label
   cidr_block     = var.vcn_cidr
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
   display_name   = var.vcn_display_name
 }
 
 resource oci_core_internet_gateway this {
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
   vcn_id         = oci_core_vcn.this.id
 }
 
@@ -24,11 +29,11 @@ resource "oci_core_default_route_table" "this" {
 }
 
 data "oci_identity_availability_domains" "this" {
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
 }
 
 resource "oci_core_security_list" "this" {
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
   vcn_id = oci_core_vcn.this.id
   ingress_security_rules {
     protocol = "6"
@@ -48,7 +53,7 @@ resource "oci_core_subnet" "this" {
   cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), count.index)
   display_name        = "Default Subnet ${lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")}"
   dns_label           = "${var.subnet_dns_label}${count.index + 1}"
-  compartment_id      = var.compartment_ocid
+  compartment_id      = oci_identity_compartment.this.id
   vcn_id              = oci_core_vcn.this.id
   security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
 }
@@ -60,7 +65,7 @@ data "oci_core_subnet" "this" {
 
 data "oci_core_images" "this" {
   #Required
-  compartment_id = "${var.compartment_ocid}"
+  compartment_id = "${oci_identity_compartment.this.id}"
 
   #Optional
   shape = "VM.Standard.E2.1.Micro"
@@ -69,7 +74,7 @@ data "oci_core_images" "this" {
 
 resource "oci_core_instance" "this" {
   availability_domain  = data.oci_core_subnet.this.availability_domain
-  compartment_id       = var.compartment_ocid
+  compartment_id       = oci_identity_compartment.this.id
   display_name         = var.instance_display_name
   shape                = var.shape
 
@@ -112,7 +117,7 @@ resource "random_string" "autonomous_database_schema_password" {
 
 data "oci_database_autonomous_db_versions" "test_autonomous_db_versions" {
   #Required
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
 
   #Optional
   db_workload = var.autonomous_database_db_workload
@@ -121,7 +126,7 @@ data "oci_database_autonomous_db_versions" "test_autonomous_db_versions" {
 resource "oci_database_autonomous_database" "autonomous_database" {
   #Required
   admin_password           = random_string.autonomous_database_admin_password.result
-  compartment_id           = var.compartment_ocid
+  compartment_id           = oci_identity_compartment.this.id
   cpu_core_count           = "1"
   data_storage_size_in_tbs = "1"
   is_free_tier             = true
@@ -137,7 +142,7 @@ resource "oci_database_autonomous_database" "autonomous_database" {
 
 data "oci_database_autonomous_databases" "autonomous_databases" {
   #Required
-  compartment_id = var.compartment_ocid
+  compartment_id = oci_identity_compartment.this.id
 
   #Optional
   display_name = oci_database_autonomous_database.autonomous_database.display_name
