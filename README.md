@@ -4,16 +4,17 @@ Test application for Micronaut Data JDBC and GraalVM that uses Oracle Autonomous
 
 ## Pre-Requesites
 
+### Oracle Cloud Tenancy
+
+1. Resource Manager stack created See: [setup.md](setup.md)
+2. `setup.sh` script via Cloud Shell. See: [setup.md](setup.md)
+
 ### Local Development Machine
 
 1. GraalVM installed locally - https://www.graalvm.org/getting-started/#install-graalvm
 2. Micronaut installed locally (SDKMAN! install recommended) https://micronaut.io/download.html
 3. OCI Config file created locally at `~/.oci/config` - https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsconfigureocicli.htm
-4. `setup.sh` script executed on **local machine**. See: [setup.md](setup.md)
-
-### Oracle Cloud Tenancy
-
-1. Resource Manager stack created See: [setup.md](setup.md)
+4. Run snippets produced by `setup.sh` script that you ran in Cloud Shell. See: [setup.md](setup.md) 
 
 ## Setup, Run, Build & Deploy
 
