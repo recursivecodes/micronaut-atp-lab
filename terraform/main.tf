@@ -60,9 +60,7 @@ resource "oci_core_subnet" "this" {
 
 
 data "oci_core_subnet" "this" {
-  ads = length(data.oci_identity_availability_domains.this.availability_domains)
-  lastAd = ads - 1
-  subnet_id = oci_core_subnet.this[lastAd].id // the last AD should have the "always free" shapes...
+  subnet_id = oci_core_subnet.this[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id // the last AD should have the "always free" shapes...
 }
 
 data "oci_core_images" "this" {
@@ -83,9 +81,7 @@ resource "oci_core_instance" "this" {
   create_vnic_details {
     assign_public_ip       = var.assign_public_ip
     display_name           = var.vnic_name
-    ads = length(data.oci_identity_availability_domains.this.availability_domains)
-    lastAd = ads - 1
-    subnet_id              = oci_core_subnet.this[lastAd].id
+    subnet_id              = oci_core_subnet.this[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id
   }
 
   metadata = {
