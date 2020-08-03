@@ -50,7 +50,7 @@ resource "oci_core_security_list" "this" {
 
 resource "oci_core_subnet" "subnets" {
   availability_domain = local.availability_domain[0]
-  cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), count.index)
+  cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), 0)
   display_name        = "MN-OCI Demo Subnet"
   dns_label           = "${var.subnet_dns_label}1"
   compartment_id      = oci_identity_compartment.this.id
