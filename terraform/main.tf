@@ -7,14 +7,14 @@ resource "oci_identity_compartment" "this" {
   name = "mn-oci-hol"
 }
 
-resource oci_core_vcn this {
+resource "oci_core_vcn" "this" {
   dns_label      = var.vcn_dns_label
   cidr_block     = var.vcn_cidr
   compartment_id = oci_identity_compartment.this.id
   display_name   = var.vcn_display_name
 }
 
-resource oci_core_internet_gateway this {
+resource "oci_core_internet_gateway" "this" {
   compartment_id = oci_identity_compartment.this.id
   vcn_id         = oci_core_vcn.this.id
 }
@@ -47,7 +47,7 @@ resource "oci_core_security_list" "this" {
   }
 }
 
-resource "oci_core_subnet" "this" {
+resource "oci_core_subnet" "subnets" {
   count               = length(data.oci_identity_availability_domains.this.availability_domains)
   availability_domain = lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")
   cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), count.index)
@@ -60,7 +60,7 @@ resource "oci_core_subnet" "this" {
 
 
 data "oci_core_subnet" "this" {
-  subnet_id = oci_core_subnet.this[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id // the last AD should have the "always free" shapes...
+  subnet_id = oci_core_subnet.subnets[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id // the last AD should have the "always free" shapes...
 }
 
 data "oci_core_images" "this" {
@@ -81,7 +81,7 @@ resource "oci_core_instance" "this" {
   create_vnic_details {
     assign_public_ip       = var.assign_public_ip
     display_name           = var.vnic_name
-    subnet_id              = oci_core_subnet.this[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id
+    subnet_id              = data.oci_core_subnet.this.id
   }
 
   metadata = {
