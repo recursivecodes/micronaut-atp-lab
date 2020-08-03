@@ -29,7 +29,7 @@ resource "oci_core_default_route_table" "this" {
 }
 
 data "oci_identity_availability_domains" "this" {
-  compartment_id = oci_identity_compartment.this.id
+  compartment_id = var.compartment_ocid
 }
 
 resource "oci_core_security_list" "this" {
