@@ -60,7 +60,7 @@ resource "oci_core_subnet" "subnets" {
 
 
 data "oci_core_subnet" "this" {
-  subnet_id = oci_core_subnet.subnets[-1].id // the last AD should have the "always free" shapes...
+  subnet_id = oci_core_subnet.subnets[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id // the last AD should have the "always free" shapes...
 }
 
 data "oci_core_images" "this" {
