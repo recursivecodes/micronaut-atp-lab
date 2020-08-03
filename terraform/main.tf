@@ -48,7 +48,7 @@ resource "oci_core_security_list" "this" {
   }
 }
 
-resource "oci_core_subnet" "subnets" {
+resource "oci_core_subnet" "subnet" {
   availability_domain = local.availability_domain[0]
   cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), 0)
   display_name        = "MN-OCI Demo Subnet"
@@ -59,7 +59,7 @@ resource "oci_core_subnet" "subnets" {
 }
 
 data "oci_core_subnet" "this" {
-  subnet_id = oci_core_subnet.subnets.0.id // the last AD should have the "always free" shapes...
+  subnet_id = oci_core_subnet.subnet.id // the last AD should have the "always free" shapes...
 }
 
 data "oci_core_images" "this" {
