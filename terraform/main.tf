@@ -49,32 +49,51 @@ resource "oci_core_security_list" "this" {
 }
 
 resource "oci_core_subnet" "subnets" {
-  count               = length(data.oci_identity_availability_domains.this.availability_domains)
-  availability_domain = lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")
+  availability_domain = local.availability_domain[0]
   cidr_block          = cidrsubnet(var.vcn_cidr, ceil(log(length(data.oci_identity_availability_domains.this.availability_domains) * 2, 2)), count.index)
-  display_name        = "Default Subnet ${lookup(data.oci_identity_availability_domains.this.availability_domains[count.index], "name")}"
-  dns_label           = "${var.subnet_dns_label}${count.index + 1}"
+  display_name        = "MN-OCI Demo Subnet"
+  dns_label           = "${var.subnet_dns_label}1"
   compartment_id      = oci_identity_compartment.this.id
   vcn_id              = oci_core_vcn.this.id
-  security_list_ids   = ["${oci_core_vcn.this.default_security_list_id}"]
+  security_list_ids   = [oci_core_vcn.this.default_security_list_id]
 }
 
-
 data "oci_core_subnet" "this" {
-  subnet_id = oci_core_subnet.subnets[length(data.oci_identity_availability_domains.this.availability_domains) - 1].id // the last AD should have the "always free" shapes...
+  subnet_id = oci_core_subnet.subnets.0.id // the last AD should have the "always free" shapes...
 }
 
 data "oci_core_images" "this" {
   #Required
-  compartment_id = "${oci_identity_compartment.this.id}"
-
+  compartment_id = oci_identity_compartment.this.id
   #Optional
   shape = "VM.Standard.E2.1.Micro"
   state = "AVAILABLE"
 }
 
+data "oci_limits_services" "services" {
+  compartment_id = var.tenancy_ocid
+
+  filter {
+    name   = "name"
+    values = ["compute"]
+  }
+}
+
+data "oci_limits_limit_values" "ad_limits" {
+  count          = length(data.oci_identity_availability_domains.this.availability_domains)
+  compartment_id = var.tenancy_ocid
+  service_name   = data.oci_limits_services.services.services.0.name
+  availability_domain = data.oci_identity_availability_domains.this[count.index].name
+  name                = "vm-standard-e2-1-micro-count"
+  scope_type          = "AD"
+}
+
+locals {
+  availability_domain = [for limit in data.oci_limits_limit_values.ad_limits : limit.limit_values[0].availability_domain if limit.limit_values[0].value > 0]
+}
+
 resource "oci_core_instance" "this" {
-  availability_domain  = data.oci_core_subnet.this.availability_domain
+  availability_domain  = local.availability_domain[0]
   compartment_id       = oci_identity_compartment.this.id
   display_name         = var.instance_display_name
   shape                = var.shape
