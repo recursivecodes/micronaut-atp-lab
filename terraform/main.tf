@@ -3,6 +3,7 @@ terraform {
 }
 
 resource "oci_identity_compartment" "this" {
+  compartment_id = var.compartment_ocid
   description = "Micronaut HOL Compartment"
   name = "mn-oci-hol"
 }
