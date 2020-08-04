@@ -99,6 +99,24 @@ variables:
     dependsOn:
       compartmentId: tenancy_ocid
 
+  tenancy_ocid:
+    visible: false
+
+  compartment_ocid:
+    visible: false
+
+  user_data:
+    visible: false
+
+  autonomous_database_db_workload:
+    visible: false
+
+  autonomous_database_license_model:
+    visible: false
+
+  autonomous_database_is_dedicated
+    visible: false
+
   assign_public_ip:
     type: boolean
     visible: false
