@@ -192,6 +192,23 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    sdk install micronaut
    ``` -->
 
+1. Setup SQLcl
+
+   ```
+   sudo yum install -y https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+   sudo yum install -y mysql
+   sudo yum install -y sqlcl
+   /opt/oracle/sqlcl/bin/sql -v
+   /opt/oracle/sqlcl/bin/sql admin/Commodore-64@mnociatp_high @createSchema.sql
+   ```
+
+   mysql --host 10.0.0.6 -u admin -p
+   Password: 1Tester;
+
+   In SQL Workshop
+   129.213.48.167
+
+
 1. Setup the Database Wallet
    ```
    sudo mkdir -p /opt/oracle/wallet

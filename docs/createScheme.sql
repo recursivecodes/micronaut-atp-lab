@@ -1,0 +1,6 @@
+
+DROP USER mnocidemo
+
+CREATE USER mnocidemo IDENTIFIED BY 1Tester;
+GRANT CONNECT, RESOURCE TO mnocidemo;
+GRANT UNLIMITED TABLESPACE TO mnocidemo;
