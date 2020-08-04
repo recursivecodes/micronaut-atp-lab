@@ -12,9 +12,15 @@ Table of Contents
   * [Deploy (From Local To VM)](#deploy-from-local-to-vm)
   * [Destroy](#destroy)
 
-## Setup OCI CLI Profile On Local Machine
+## Setup OCI CLI & Profile On Local Machine
 
 Follow instructions here:
+
+Install CLI:
+
+https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
+
+Create Profile:
 
 https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsconfigureocicli.htm
 
@@ -120,7 +126,7 @@ The Cloud Shell script will produce a snippet to be used to download your ATP wa
 oci db autonomous-database generate-wallet --autonomous-database-id ocid1.autonomousdatabase.oc1.iad... --file /tmp/wallet.zip --password [DB PASSWORD] && unzip /tmp/wallet.zip -d /tmp/wallet
 ```
 
-Run this script immediately to set up your wallet.
+Run the script (above) immediately to set up your wallet.
 
 ## Run Application (Locally)
  
