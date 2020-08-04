@@ -18,6 +18,7 @@ variableGroups:
 - title: ${Messages.solutionsHub.requiredConfig()}
   visible: true  
   variables:
+  - ssh_public_key
   - vcn_display_name
   - instance_display_name
   - autonomous_data_warehouse_db_name
@@ -37,7 +38,6 @@ variableGroups:
   - boot_volume_size_in_gbs
   - assign_public_ip
   - vnic_name
-  - ssh_public_key
   - user_data
   - instance_timeout
   - attachment_type
@@ -45,6 +45,15 @@ variableGroups:
   - custom_image_id
 
 variables:
+  ssh_public_key:
+    type: oci:core:ssh:publickey
+    additionalProps:
+      allowMultiple: true
+    required: false
+    default: [""]
+    pattern: "((^(ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)(,((ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)*$"
+    title: ${Messages.solutionsHub.solutions.computeInstance.variables.ssh_public_key.title()}
+    description: ${Messages.solutionsHub.solutions.computeInstance.variables.ssh_public_key.description()}
 
   region:
     type: oci:identity:region:name
@@ -124,16 +133,6 @@ variables:
     default: myVNIC
     title: ${Messages.solutionsHub.solutions.computeInstance.variables.vnic_name.title()}
     description: ${Messages.solutionsHub.solutions.computeInstance.variables.vnic_name.description()}
-
-  ssh_public_key:
-    type: oci:core:ssh:publickey
-    additionalProps:
-      allowMultiple: true
-    required: false
-    default: [""]
-    pattern: "((^(ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)(,((ssh-rsa AAAAB3NzaC1yc2|ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNT|ecdsa-sha2-nistp384 AAAAE2VjZHNhLXNoYTItbmlzdHAzODQAAAAIbmlzdHAzOD|ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1Mj|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5|ssh-dss AAAAB3NzaC1kc3)[0-9A-Za-z+\/]+[=]{0,3})( [^,]*)?)*$"
-    title: ${Messages.solutionsHub.solutions.computeInstance.variables.ssh_public_key.title()}
-    description: ${Messages.solutionsHub.solutions.computeInstance.variables.ssh_public_key.description()}
 
   instance_timeout:
     type: string

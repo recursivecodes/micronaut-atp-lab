@@ -7,7 +7,7 @@ variable "instance_display_name" {
   default = "mn-oci-demo"
 }
 variable "boot_volume_size_in_gbs" {
-  default = 10
+  default = 40
 }
 variable "shape" {
   default = "VM.Standard.E2.1.Micro"
