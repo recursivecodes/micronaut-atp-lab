@@ -40,12 +40,12 @@ lab runs in the cloud so nothing needs to be installed on your local machine.
 1. Run the app.
 
    ```
-   java -jar -DMICRONAUT_OCI_DEMO_PASSWORD [your generated password] /app/micronaut-data-jdbc-graal-atp-0.1-all.jar
+   ./gradlew -DMICRONAUT_OCI_DEMO_PASSWORD=HandsOnLabUser1 run
+   java -jar -DMICRONAUT_OCI_DEMO_PASSWORD HandsOnLabUser1 /app/micronaut-data-jdbc-graal-atp-0.1-all.jar
    ```
 
 ## Continue through the following section
 
-1. Micronaut [Micronaut](micronaut.md)
 
 ## Want to Learn More?
 
