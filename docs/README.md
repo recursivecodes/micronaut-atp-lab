@@ -51,19 +51,19 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
 1. Click "Create an ATP database" in the Autonomous Transaction Processing box.  
    ![](images/cloudDashboard.png)
 1. Choose your new compartment.
-1. Enter `store` in Display name
-1. Enter  `store` in Database name
+1. Enter `mnociatp` in Display name
+1. Enter  `mnociatp` in Database name
 1. Make sure "Transaction Processing" is selected.
 1. Make sure "Shared Infrastructure" is selected.  
    ![](images/createATPForm1.png)
-1. Scroll down to "Create administrator credentials".  Enter and confirm the ADMIN password.  
+1. Scroll down to "Create administrator credentials".  Enter and confirm the ADMIN password. Use Commodore-64
    **Note:** The Admin account is the top level user for your new database. Create a strong password and keep it secure.
 1. Scroll to the bottom and click "Create Autonomous Database".  
    ![](images/createATPForm2.png)  
    You will receive an email when your new ATP Database instance has been provisioned.
 1. Locate your new database's OCID and click Copy.
    ![](images/createATPGetOcid.png)
-1. While the database is provisioned click the Cloud Shell icon. This will open a preconfigured VM that you will use to access and setup your project.
+1. While the database is provisioned click the Cloud Shell icon. This will open a preconfigured VM that you will use to access and setup your project. Cloud Shell has the OCI command line tools already configured. You can install these tools locally but this is an easy way to do it.
    ![](images/cloudShell.png)  
 1. Once Cloud Shell is running, create an environment variable for your Database OCID you copied above.
    ```
@@ -81,9 +81,10 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
 
    In your **Cloud Shell**  Enter the following.
 
-   ```bash
+   ```
    oci db autonomous-database generate-wallet --autonomous-database-id ${DB_OCID} --password Pw4ZipFile --file ~/Wallet_micronaut.zip
-```
+   ```
+
 1. Generate a new RSA key pair.
    ```
    ssh-keygen -t rsa -N "" -b 2048 -C "cloud_shell" -f ~/.ssh/id_rsa
@@ -99,7 +100,7 @@ An Oracle Compute instance is a Cloud VM that you will use to install and run al
 
 1. Click "Create a VM instance" in the Compute box. In this lab the Compute Instance will be accessed from the Cloud Shell and a local Terminal via SSH.
    ![](images/cloudDashboard.png)
-1. Populate the name or keep the default.
+1. Populate the name with **mnocidemo**
    ![](images/computeForm1Create.png)
 1. Scroll down the the "Add SSH keys" section.
 1. Select "Paste SSH keys" and paste in the public SSH key created in the cloud shell earlier.
@@ -192,23 +193,6 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    sdk install micronaut
    ``` -->
 
-1. Setup SQLcl
-
-   ```
-   sudo yum install -y https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
-   sudo yum install -y mysql
-   sudo yum install -y sqlcl
-   /opt/oracle/sqlcl/bin/sql -v
-   /opt/oracle/sqlcl/bin/sql admin/Commodore-64@mnociatp_high @createSchema.sql
-   ```
-
-   mysql --host 10.0.0.6 -u admin -p
-   Password: 1Tester;
-
-   In SQL Workshop
-   129.213.48.167
-
-
 1. Setup the Database Wallet
    ```
    sudo mkdir -p /opt/oracle/wallet
@@ -243,8 +227,15 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
          ```
       1. Save the file
 
+1. Setup SQLcl
+   ```
+   sudo yum install -y https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+   sudo yum install -y mysql
+   sudo yum install -y sqlcl
+   /opt/oracle/sqlcl/bin/sql -v
+   ```
 
-You now have a database and a VM that is setup with Graal, Micronaut and the database wallet.
+You now have a database and a VM that is setup with all the tools needed and cridentials to access the database via a secure wallet.
 
 ## Continue through the following section
 

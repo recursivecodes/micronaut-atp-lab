@@ -16,8 +16,17 @@ lab runs in the cloud so nothing needs to be installed on your local machine.
 
 1. Clone the repository.
 
-   ```
+   ```TODO Change this to the correct repository
    git clone https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp
+   ```
+
+   ```Might not have to do this???
+   cd micronaut-data-jdbc-graal-atp/docs
+   ```
+
+1. Run the scheme to setup the database for the app:
+   ```
+   /opt/oracle/sqlcl/bin/sql admin/Commodore-64@mnociatp_high @createSchema.sql
    ```
 
 1. Build the repository.
