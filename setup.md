@@ -29,7 +29,7 @@ https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsconfig
 For example:
 
 ```shell script
-ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f /.ssh/id_oci
+ssh-keygen -t rsa -N "" -b 2048 -C "id_oci" -f ~/.ssh/id_oci
 ```
 
 ## Create Infrastructure
@@ -110,9 +110,7 @@ From Cloud Shell, download the following script, make it executable, and run it:
 
 ```shell script
 # run in Cloud Shell
-wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh
-chmod +x setup.sh
-./setup.sh
+wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh && ./setup.sh
 ```
 
 Enter the values that you copied from the TF output when prompted. The script will produce several snippets of output to be used to build, run and deploy.

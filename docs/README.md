@@ -3,7 +3,8 @@
 ## Before You Begin
 
 This 2-hour lab walks you through the steps to use Micronaut, Micronaut Data
-and GraalVM native image to connected to an Oracle Database.
+and GraalVM native image to connected to an Oracle Database. Everything in this
+lab runs in the cloud so nothing needs to be installed on your local machine.
 
 1. Create an Oracle Cloud account
 1. Create an Autonomous Transaction Processing (ATP) Database
@@ -16,9 +17,9 @@ and GraalVM native image to connected to an Oracle Database.
 * Internet Browser
 * [GitHub](https://github.com/) Account  
    If you do not already have a GitHub account, create one now
-* [Micronaut](https://micronaut.io/download.html)
-* [GraalVM](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.1.0)
-* [VS Code](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjijsO-we7qAhVjMX0KHdJTCgYQFjAAegQIBRAB&url=https%3A%2F%2Fcode.visualstudio.com%2Fdownload&usg=AOvVaw11fc5fOXYIyxQh75jYLjXg) or [IntelliJ](https://www.jetbrains.com/idea/download/#section=mac)
+#* [Micronaut](https://micronaut.io/download.html)
+#* [GraalVM](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-20.1.0)
+#* [VS Code](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjijsO-we7qAhVjMX0KHdJTCgYQFjAAegQIBRAB&url=https%3A%2F%2Fcode.visualstudio.com%2Fdownload&usg=AOvVaw11fc5fOXYIyxQh75jYLjXg) or [IntelliJ](https://www.jetbrains.com/idea/download/#section=mac)
 
 ## Part 1 - Create an Oracle Always-Free Cloud Account
 
@@ -56,7 +57,7 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
 1. Make sure "Shared Infrastructure" is selected.  
    ![](images/createATPForm1.png)
 1. Scroll down to "Create administrator credentials".  Enter and confirm the ADMIN password.  
-   **Note:**  the Admin account is the top level user for your new database.  Create a strong password and keep it secure.
+   **Note:** The Admin account is the top level user for your new database. Create a strong password and keep it secure.
 1. Scroll to the bottom and click "Create Autonomous Database".  
    ![](images/createATPForm2.png)  
    You will receive an email when your new ATP Database instance has been provisioned.
@@ -70,19 +71,27 @@ You will need a database to complete the exercises.  An Oracle Autonomous Databa
    ```
    ![](images/cloudSheelOcidEnv.png)  
 
-The Oracle Autonomous Database uses an extra level of security in the form of a wallet containing access keys for your new Database.  
+   The Oracle Autonomous Database uses an extra level of security in the form of a wallet containing access keys for your new Database.  
 
-Once your ATP Database status is Available (the yellow box turns green) you can download the wallet inside the Cloud Shell using the pre-configured [OCI-CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
+   Once your ATP Database status is Available (the yellow box turns green) you can download the wallet inside the Cloud Shell using the pre-configured [OCI-CLI](https://docs.cloud.oracle.com/en-us/iaas/Content/API/Concepts/cliconcepts.htm).
 
-You should change the password value in this command to something more secure.
-  
-   **Note:** This password is for the .zip file, not your database.
+   You should change the password value in this command to something more secure.
 
-In your **Cloud Shell**  Enter the following.
+      **Note:** This password is for the .zip file, not your database.
 
-```bash
-oci db autonomous-database generate-wallet --autonomous-database-id ${DB_OCID} --password Pw4ZipFile --file ~/Wallet_micronaut.zip
+   In your **Cloud Shell**  Enter the following.
+
+   ```bash
+   oci db autonomous-database generate-wallet --autonomous-database-id ${DB_OCID} --password Pw4ZipFile --file ~/Wallet_micronaut.zip
 ```
+1. Generate a new RSA key pair.
+   ```
+   ssh-keygen -t rsa -N "" -b 2048 -C "cloud_shell" -f ~/.ssh/id_rsa
+   ```
+1. Display the public key and copy it.
+   ```
+   cat ~/.ssh/id_rsa.pub
+   ```
 
 ## Create a Compute instance
 
@@ -93,31 +102,21 @@ An Oracle Compute instance is a Cloud VM that you will use to install and run al
 1. Populate the name or keep the default.
    ![](images/computeForm1Create.png)
 1. Scroll down the the "Add SSH keys" section.
-1. Select "Paste SSH keys".
-1. In your **Cloud Shell**
+1. Select "Paste SSH keys" and paste in the public SSH key created in the cloud shell earlier.
+1. You may want to access this VM instance from your local Terminal, press the “+ Another Key”
    1. Generate a new RSA key pair.
       ```
-      ssh-keygen -t rsa -N "" -b 2048 -C "cloud_shell" -f ~/.ssh/id_rsa
+      ssh-keygen -t rsa -N "" -b 2048 -C "oci_instance" -f ~/.ssh/id_rsa
       ```
    1. Display the public key and copy it.
       ```
       cat ~/.ssh/id_rsa.pub
       ```
-1. Press the “+ Another Key”
-1. From your local Terminal
-   1. Generate a new RSA key pair.
-      ```
-      ssh-keygen -t rsa -N "" -b 2048 -C "cloud_shell" -f ~/.ssh/id_rsa
-      ```
-   1. Display the public key and copy it.
-      ```
-      cat ~/.ssh/id_rsa.pub
-      ```
-1. In the **Create Compute form**, paste the public key in the SSH KEYS box.
-   ![](images/computeForm2Create.png)
-   If you intend to SSH into your compute instance from any other machine, you may click the "+ Another Key" button and enter the public key for that machine.  
-   (you may also want to save a copy of the Cloud Shell private key '~/.ssh/id_rsa' on your local machine.)  
-   **DO NOT SHARE your private key**.  This key allows access to your compute instance.
+   1. In the **Create Compute form**, paste the public key in the SSH KEYS box.
+      ![](images/computeForm2Create.png)
+      If you intend to SSH into your compute instance from any other machine, you may click the "+ Another Key" button and enter the public key for that machine.  
+      (you may also want to save a copy of the Cloud Shell private key '~/.ssh/id_rsa' on your local machine.)  
+      **DO NOT SHARE your private key**.  This key allows access to your compute instance.
 1. Click "Create".
 1. Once the Compute instance is Running, locate the Public IP Address and click Copy.  
 Keep this IP address handy, it will be used throughout the lab and referred to as \<YourPublicIP>.
@@ -135,13 +134,13 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    ```
    ![](images/computeSaveWallet.png)
 
-1. In your local Terminal
-   Create an environment variable to store the IP.
+1. In your local Terminal create an environment variable to store the IP.
    ```
    export COMPUTE_IP=<YourPublicIP>
    ```
 
-1. In your local Terminal use SSH to access your Compute Instance.
+1. Use SSH to access your Compute Instance.
+   You have a choice connect to your compute instance from Cloud Shell or from your local terminal.
    ```
    ssh opc@${COMPUTE_IP}
    ```
@@ -155,16 +154,17 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    ```
    Install graal:
    ```
-   wget
-   https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
+   wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.1.0/graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
 
    tar -xf graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
 
    rm graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
 
-   export JAVA_HOME=/home/opc/graalvm-ce-java11-20.1.0
+   echo 'export JAVA_HOME=/home/opc/graalvm-ce-java11-20.1.0' >> ~/.bashrc
 
-   export PATH=$JAVA_HOME/bin:/home/opc/micronaut-cli-2.0.0/bin:$PATH
+   echo 'export PATH=$JAVA_HOME/bin:/home/opc/micronaut-cli-2.0.0/bin:$PATH' >> ~/.bashrc
+
+   source ~/.bashrc
 
    java -version
    ```
@@ -184,6 +184,13 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
    ```
    Micronaut Version: 2.0.0
    JVM Version: 11.0.7
+
+   <!-- ```
+   curl -s "https://get.sdkman.io" | bash
+   source "$HOME/.sdkman/bin/sdkman-init.sh"
+   sdk version
+   sdk install micronaut
+   ``` -->
 
 1. Setup the Database Wallet
    ```
@@ -219,9 +226,12 @@ Keep this IP address handy, it will be used throughout the lab and referred to a
          ```
       1. Save the file
 
+
+You now have a database and a VM that is setup with Graal, Micronaut and the database wallet.
+
 ## Continue through the following section
 
-1. Micronaut [Micronaut](Micronaut.md)
+1. Micronaut [Micronaut](micronaut.md)
 
 ## Want to Learn More?
 
