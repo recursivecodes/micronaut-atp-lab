@@ -26,7 +26,7 @@ lab runs in the cloud so nothing needs to be installed on your local machine.
 
 1. Run the scheme to setup the database for the app:
    ```
-   /opt/oracle/sqlcl/bin/sql admin/Commodore-64@mnociatp_high @createSchema.sql
+   /opt/oracle/sqlcl/bin/sql admin/Commodore-64@mnociatp_high @/home/opc/micronaut-data-jdbc-graal-atp/docs/createScheme.sql
    ```
 
 1. Build the repository.
