@@ -106,7 +106,9 @@ From Cloud Shell, download the following script, make it executable, and run it:
 
 ```shell script
 # run in Cloud Shell
-wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh && ./setup.sh
+wget -O setup.sh https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/download/setup.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
 Enter the values that you copied from the TF output when prompted. The script will produce several snippets of output to be used to build, run and deploy.
