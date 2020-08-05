@@ -40,7 +40,7 @@ https://github.com/recursivecodes/micronaut-data-jdbc-graal-atp/releases/latest/
 
 Go to the Resource Manager:
 
-![Create stack button](images/resource_manager_link.png)
+![Stacks menu](images/resource_manager_link.png)
 
 Click 'Create Stack':
 
@@ -48,47 +48,43 @@ Click 'Create Stack':
 
 Choose 'My Configuration', and upload the configuration zip:
 
-![Create stack button](images/stack_info_1.png)
+![Create stack](images/stack_info_1.png)
 
 Enter name, description and choose the compartment, then click 'Next':
 
-![Create stack button](images/stack_info_2.png)
+![Create stack details](images/stack_info_2.png)
 
-Accept the default data in this section:
+Add the SSH key that you [created earlier](#create-an-ssh-keypair):
 
-![Create stack button](images/stack_var_1.png)
+![Add SSH Key](images/choose_ssh_key.png)
 
-And this section:
+Confirm the following shape is selected:
 
-![Create stack button](images/stack_var_2.png)
+![Choose shape](images/choose_shape.png)
 
-Upload your public SSH key that you [created earlier](#create-an-ssh-keypair):
+Click 'Next', review and create your stack.
 
-![Create stack button](images/stack_var_3.png)
-
-Accept this data. Click 'Next', review and create your stack.
-
-![Create stack button](images/stack_var_4.png)
+![Review stack](images/stack_var_4.png)
 
 On the stack details page, click 'Terraform Actions' and select 'Plan'.
 
-![Create stack button](images/stack_plan.png)
+![Plan stack](images/stack_plan.png)
 
 Review the plan output, ensure no failures.
 
-![Create stack button](images/plan_log.png)
+![Review plan](images/plan_log.png)
 
 Click 'Terraform Actions' and select 'Apply'.
 
-![Create stack button](images/stack_apply.png)
+![Apply plan](images/stack_apply.png)
 
 Choose the plan you just created, then click 'Apply'.
 
-![Create stack button](images/stack_apply_2.png)
+![Apply plan](images/stack_apply_2.png)
 
 Review the output:
 
-![Create stack button](images/tf_output.png)
+![Review plan output](images/tf_output.png)
 
 Collect the following values from the output:
 
