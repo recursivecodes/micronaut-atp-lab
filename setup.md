@@ -64,7 +64,7 @@ Confirm the following shape is selected:
 
 Click 'Next', review and create your stack.
 
-![Review stack](images/stack_var_4.png)
+![Review stack](images/review_stack.png)
 
 On the stack details page, click 'Terraform Actions' and select 'Plan'.
 
