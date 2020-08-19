@@ -3,7 +3,6 @@
 Table of Contents
 =================
 
-  * [Setup OCI CLI Profile On Local Machine](#setup-oci-cli-profile-on-local-machine)
   * [Create an SSH Keypair](#create-an-ssh-keypair)
   * [Create Infrastructure](#create-infrastructure)
   * [Create DB Schema](#create-db-schema)
@@ -11,18 +10,6 @@ Table of Contents
   * [Run Application (Locally)](#run-application-locally)
   * [Deploy (From Local To VM)](#deploy-from-local-to-vm)
   * [Destroy](#destroy)
-
-## Setup OCI CLI & Profile On Local Machine
-
-Follow instructions here:
-
-Install CLI:
-
-https://docs.cloud.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm
-
-Create Profile:
-
-https://docs.cloud.oracle.com/en-us/iaas/Content/Functions/Tasks/functionsconfigureocicli.htm
 
 ## Create an SSH Keypair
 
@@ -115,14 +102,33 @@ Enter the values that you copied from the TF output when prompted. The script wi
 
 ## Download Wallet (Locally)
 
-The Cloud Shell script will produce a snippet to be used to download your ATP wallet to your local machine. It will look similar to this:
+In the OCI Console, click on the burger menu and select 'Autonomous Transaction Processing' under 'Oracle Database'.
 
-```shell script
-# run on local machine
-oci db autonomous-database generate-wallet --autonomous-database-id ocid1.autonomousdatabase.oc1.iad... --file /tmp/wallet.zip --password [DB PASSWORD] && unzip /tmp/wallet.zip -d /tmp/wallet
-```
+![ATP menu](images/atp-menu.png)
 
-Run the script (above) immediately to set up your wallet.
+Make sure you are in the `mn-oci-hol`) compartment:
+
+![Choose compartment](images/choose-compartment.png)
+
+Find the newly created instance and click on it. 
+
+![ATP instance](images/atp-instance-list.png)
+
+In the instance details, click on 'DB Connection'.
+
+![DB Connection](images/db-connection-btn.png)
+
+In the 'Database Connection' dialog, select 'Instance Wallet' and click 'Download Wallet'.
+
+![Wallet dialog](images/wallet-dialog.png)
+
+Enter (and confirm) the `atp_wallet_password` from the Terraform output and click 'Download'.
+
+![Wallet password](images/wallet-password.png)
+
+After the wallet zip has been downloaded, unzip it and move it to `/tmp/wallet`.
+
+![Wallet dir](images/tmp-wallet-dir.png)
 
 ## Run Application (Locally)
  

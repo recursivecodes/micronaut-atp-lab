@@ -39,9 +39,7 @@ echo "GRANT CONNECT, RESOURCE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWO
 echo "GRANT UNLIMITED TABLESPACE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWORD@mnociatp_high
 echo "Schema 'mnocidemo' created!"
 echo
-echo "Step 1: Run the following (locally) to download your wallet:"
-echo
-echo "oci db autonomous-database generate-wallet --autonomous-database-id $ATP_ID --file /tmp/wallet.zip --password $WALLET_PASSWORD && unzip /tmp/wallet.zip -d /tmp/wallet"
+echo "Step 1: Download your wallet to your local machine (see instructions):"
 echo
 echo "Step 2: Run your app (locally) with:"
 echo
