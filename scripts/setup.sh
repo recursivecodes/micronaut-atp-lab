@@ -51,7 +51,7 @@ echo "scp -i ~/.ssh/id_oci -r /tmp/wallet opc@${PUBLIC_IP}:/tmp/wallet"
 echo
 echo "Step 4: Deploy your JAR (from local machine to VM) with:"
 echo
-echo "scp -i ~/.ssh/id_oci -r build/libs/micronaut-data-jdbc-graal-atp-0.1-all.jar opc@${PUBLIC_IP}:/app"
+echo "scp -i ~/.ssh/id_oci -r build/libs/micronaut-data-jdbc-graal-atp-0.1-all.jar opc@${PUBLIC_IP}:/app/application.jar"
 echo
 echo "Step 5: SSH into your VM"
 echo
@@ -59,7 +59,7 @@ echo "ssh -i ~/.ssh/id_oci opc@${PUBLIC_IP}"
 echo
 echo "Step 6: Run your JAR on the VM with:"
 echo
-echo "java -jar -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} /app/micronaut-data-jdbc-graal-atp-0.1-all.jar"
+echo "java -jar -DMICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD} /app/application.jar""
 echo
 echo "Done!"
 
