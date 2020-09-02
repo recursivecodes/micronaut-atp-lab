@@ -39,11 +39,11 @@ echo "GRANT CONNECT, RESOURCE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWO
 echo "GRANT UNLIMITED TABLESPACE TO mnocidemo;" | sqlplus -s admin/$DB_ADMIN_PASSWORD@mnociatp_high
 echo "Schema 'mnocidemo' created!"
 echo "Updating the 'mnocidemo' schema..."
-echo 'CREATE TABLE "PET" ("ID" VARCHAR(36),"OWNER_ID" NUMBER(19) NOT NULL,"NAME" VARCHAR(255) NOT NULL,"TYPE" VARCHAR(255) NOT NULL)' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
+echo 'CREATE TABLE "PET" ("ID" VARCHAR(36),"OWNER_ID" NUMBER(19) NOT NULL,"NAME" VARCHAR(255) NOT NULL,"TYPE" VARCHAR(255) NOT NULL);' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
 echo "Table 'PET' is created!"
-echo 'CREATE SEQUENCE "OWNER_SEQ" MINVALUE 1 START WITH 1 NOCACHE NOCYCLE' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
+echo 'CREATE SEQUENCE "OWNER_SEQ" MINVALUE 1 START WITH 1 NOCACHE NOCYCLE;' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
 echo "Sequence 'OWNER_SEQ' is created!"
-echo 'CREATE TABLE "OWNER" ("ID" NUMBER(19) PRIMARY KEY NOT NULL,"AGE" NUMBER(10) NOT NULL,"NAME" VARCHAR(255) NOT NULL)' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
+echo 'CREATE TABLE "OWNER" ("ID" NUMBER(19) PRIMARY KEY NOT NULL,"AGE" NUMBER(10) NOT NULL,"NAME" VARCHAR(255) NOT NULL);' | sqlplus -s mnocidemo/$DB_USER_PASSWORD@mnociatp_high
 echo "Table 'OWNER' is created!"
 echo
 echo "Step 1: Download your wallet to your local machine (see instructions):"
