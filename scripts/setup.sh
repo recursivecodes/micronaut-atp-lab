@@ -68,7 +68,7 @@ echo "ssh -i ~/.ssh/id_rsa opc@${PUBLIC_IP}"
 echo
 echo "Step 6: Run your JAR on the VM with:"
 echo
-echo "export MICRONAUT_OCI_DEMO_PASSWORD=${DB_USER_PASSWORD}"
+echo "export DATASOURCES_DEFAULT_PASSWORD=${DB_USER_PASSWORD}"
 echo "export TNS_ADMIN=/tmp/wallet"
 echo "java -jar /app/application.jar"
 echo
