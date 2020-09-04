@@ -55,7 +55,10 @@ resource "oci_core_subnet" "subnet" {
   dns_label           = "${var.subnet_dns_label}1"
   compartment_id      = oci_identity_compartment.this.id
   vcn_id              = oci_core_vcn.this.id
-  security_list_ids   = [oci_core_vcn.this.default_security_list_id]
+  security_list_ids   = [
+      oci_core_vcn.this.default_security_list_id,
+      oci_core_security_list.this.id
+  ]
 }
 
 data "oci_core_subnet" "this" {
