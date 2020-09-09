@@ -6,6 +6,7 @@ output "script_input" {
     tns_name = "${oci_database_autonomous_database.autonomous_database.db_name}_high"
     atp_db_ocid = oci_database_autonomous_database.autonomous_database.id
     compartment_ocid = oci_core_instance.this.compartment_id
+    public_ip = oci_core_instance.this.public_ip
     region = var.region
   }
 }
