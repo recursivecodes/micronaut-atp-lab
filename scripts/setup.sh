@@ -1,14 +1,14 @@
 # collect some info
 read -p "Enter 'script_input':" SCRIPT_JSON
 
-export COMPARTMENT_ID = $($SCRIPT_JSON  | jq '.compartment_ocid' -r)
-export TNS_NAME = $($SCRIPT_JSON  | jq '.tns_name' -r)
-export DB_ADMIN_PASSWORD = $($SCRIPT_JSON  | jq '.atp_admin_password' -r)
-export WALLET_PASSWORD = $($SCRIPT_JSON  | jq '.atp_schema_password' -r)
-export COMPARTMENT_ID = $($SCRIPT_JSON  | jq '.atp_wallet_password' -r)
-export ATP_ID = $($SCRIPT_JSON  | jq '.atp_db_ocid' -r)
-export PUBLIC_IP = $($SCRIPT_JSON  | jq '.public_ip' -r)
-export REGION = $($SCRIPT_JSON  | jq '.region' -r)
+export COMPARTMENT_ID=$($SCRIPT_JSON  | jq '.compartment_ocid' -r)
+export TNS_NAME=$(echo $SCRIPT_JSON  | jq '.tns_name' -r)
+export DB_ADMIN_PASSWORD=$(echo $SCRIPT_JSON  | jq '.atp_admin_password' -r)
+export WALLET_PASSWORD=$(echo $SCRIPT_JSON  | jq '.atp_schema_password' -r)
+export COMPARTMENT_ID=$(echo $SCRIPT_JSON  | jq '.atp_wallet_password' -r)
+export ATP_ID=$(echo $SCRIPT_JSON  | jq '.atp_db_ocid' -r)
+export PUBLIC_IP=$(echo $SCRIPT_JSON  | jq '.public_ip' -r)
+export REGION=$(echo $SCRIPT_JSON  | jq '.region' -r)
 
 # clean up past runs
 rm -rf /tmp/wallet /tmp/wallet-encoded
