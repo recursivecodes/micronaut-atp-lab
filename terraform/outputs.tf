@@ -1,11 +1,13 @@
 output "script_input" {
-  atp_admin_password = random_string.autonomous_database_admin_password.result
-  atp_schema_password = random_string.autonomous_database_schema_password.result
-  atp_wallet_password = random_string.autonomous_database_wallet_password.result
-  tns_name = "${oci_database_autonomous_database.autonomous_database.db_name}_high"
-  atp_db_ocid = oci_database_autonomous_database.autonomous_database.id
-  compartment_ocid = oci_core_instance.this.compartment_id
-  region = var.region
+  value = {
+    atp_admin_password = random_string.autonomous_database_admin_password.result
+    atp_schema_password = random_string.autonomous_database_schema_password.result
+    atp_wallet_password = random_string.autonomous_database_wallet_password.result
+    tns_name = "${oci_database_autonomous_database.autonomous_database.db_name}_high"
+    atp_db_ocid = oci_database_autonomous_database.autonomous_database.id
+    compartment_ocid = oci_core_instance.this.compartment_id
+    region = var.region
+  }
 }
 
 output "public_ip" {
