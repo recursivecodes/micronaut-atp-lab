@@ -1,7 +1,7 @@
 # collect some info
 read -p "Enter 'script_input':" SCRIPT_JSON
 
-export COMPARTMENT_ID=$($SCRIPT_JSON  | jq '.compartment_ocid' -r)
+export COMPARTMENT_ID=$(echo $SCRIPT_JSON  | jq '.compartment_ocid' -r)
 export TNS_NAME=$(echo $SCRIPT_JSON  | jq '.tns_name' -r)
 export DB_ADMIN_PASSWORD=$(echo $SCRIPT_JSON  | jq '.atp_admin_password' -r)
 export WALLET_PASSWORD=$(echo $SCRIPT_JSON  | jq '.atp_schema_password' -r)
