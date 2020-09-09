@@ -1,16 +1,14 @@
 # collect some info
-read -p "Enter 'compartment_ocid': " COMPARTMENT_ID
-read -p "Enter 'tns_name' [mnociatp_high]: " TNS_NAME
-TNS_NAME=${TNS_NAME:-mnociatp_high}
-read -p "Enter 'atp_admin_password': " -s DB_ADMIN_PASSWORD
-echo
-read -p "Enter 'atp_schema_password': " -s DB_USER_PASSWORD
-echo
-read -p "Enter 'atp_wallet_password': " -s WALLET_PASSWORD
-echo
-read -p "Enter 'atp_db_ocid': " ATP_ID
-read -p "Enter 'public_ip': " PUBLIC_IP
-read -p "Enter 'region': " REGION
+read -p "Enter 'script_input':" SCRIPT_JSON
+
+export COMPARTMENT_ID = $($SCRIPT_JSON  | jq '.compartment_ocid' -r)
+export TNS_NAME = $($SCRIPT_JSON  | jq '.tns_name' -r)
+export DB_ADMIN_PASSWORD = $($SCRIPT_JSON  | jq '.atp_admin_password' -r)
+export WALLET_PASSWORD = $($SCRIPT_JSON  | jq '.atp_schema_password' -r)
+export COMPARTMENT_ID = $($SCRIPT_JSON  | jq '.atp_wallet_password' -r)
+export ATP_ID = $($SCRIPT_JSON  | jq '.atp_db_ocid' -r)
+export PUBLIC_IP = $($SCRIPT_JSON  | jq '.public_ip' -r)
+export REGION = $($SCRIPT_JSON  | jq '.region' -r)
 
 # clean up past runs
 rm -rf /tmp/wallet /tmp/wallet-encoded
@@ -60,6 +58,8 @@ echo "scp -i ~/.ssh/id_rsa -r /tmp/wallet opc@${PUBLIC_IP}:/tmp/wallet"
 echo
 echo "Step 4: Deploy your JAR (from local machine to VM) with:"
 echo
+echo "ssh -i ~/.ssh/id_rsa opc@${PUBLIC_IP} sudo mkdir /app"
+echo "ssh -i ~/.ssh/id_rsa opc@${PUBLIC_IP} sudo chown opc /app"
 echo "scp -i ~/.ssh/id_rsa -r build/libs/example-atp-0.1-all.jar opc@${PUBLIC_IP}:/app/application.jar"
 echo
 echo "Step 5: SSH into your VM"
