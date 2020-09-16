@@ -3,6 +3,10 @@ variable "tenancy_ocid" {}
 variable "compartment_ocid" {}
 variable "region" {}
 
+variable "use_free_tier" {
+  default = true
+}
+
 variable "instance_display_name" {
   default = "mn-oci-demo"
 }

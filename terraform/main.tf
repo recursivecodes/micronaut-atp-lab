@@ -69,7 +69,7 @@ data "oci_core_images" "this" {
   #Required
   compartment_id = oci_identity_compartment.this.id
   #Optional
-  shape = "VM.Standard.E2.1.Micro"
+  shape = local.availability_domain[0] != null ? "VM.Standard.E2.1.Micro" : "VM.Standard.E2.1"
   state = "AVAILABLE"
 }
 
@@ -96,7 +96,7 @@ locals {
 }
 
 resource "oci_core_instance" "this" {
-  availability_domain  = local.availability_domain[0]
+  availability_domain  = local.availability_domain[0] != null ? local.availability_domain[0] : data.oci_identity_availability_domains.this.availability_domains[0].name
   compartment_id       = oci_identity_compartment.this.id
   display_name         = var.instance_display_name
   shape                = var.shape
@@ -152,7 +152,7 @@ resource "oci_database_autonomous_database" "autonomous_database" {
   compartment_id           = oci_identity_compartment.this.id
   cpu_core_count           = "1"
   data_storage_size_in_tbs = "1"
-  is_free_tier             = true
+  is_free_tier             = var.use_free_tier
   db_name                  = var.autonomous_database_db_name
 
   #Optional

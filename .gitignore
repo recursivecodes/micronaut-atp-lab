@@ -28,3 +28,6 @@ mn-data-jdbc-graal-atp*
 bootstrap*.yml
 reflection-config.json
 resource-config.json
+.classpath
+.project
+.settings/
